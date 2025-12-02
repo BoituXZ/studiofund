@@ -1,105 +1,123 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { mockBusinesses } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
-import { ChevronDown, Filter, Search } from "lucide-react";
+import { Search, SlidersHorizontal, MapPin } from "lucide-react";
 import Image from "next/image";
 
-const filters = ["All", "Hardware", "Retail", "Agro Dealer", "Pharmacy", "Salon"];
-
 function RiskScoreBar({ score }: { score: number }) {
-  const color =
-    score >= 7
-      ? "bg-green-500"
-      : score >= 5
-      ? "bg-yellow-500"
-      : "bg-red-500";
+  // Risk score: higher is better (green), lower is worse (red)
+  const percentage = score * 10;
+  const getGradient = () => {
+    if (score >= 7) return "from-success to-success";
+    if (score >= 5) return "from-warning to-warning";
+    return "from-destructive to-destructive";
+  };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-medium">Risk Score</span>
-        <span className="text-sm font-bold">{score.toFixed(1)}/10</span>
+    <div className="space-y-1.5">
+      <div className="flex justify-between items-center">
+        <span className="text-body-sm font-medium text-foreground">Risk Score</span>
+        <span className="text-body-sm font-semibold text-foreground font-mono">{score.toFixed(1)}/10</span>
       </div>
-      <div className="w-full bg-muted rounded-full h-2">
+      <div className="w-full bg-muted rounded-full h-1">
         <div
-          className={cn("h-2 rounded-full", color)}
-          style={{ width: `${score * 10}%` }}
+          className={cn("h-1 rounded-full bg-gradient-to-r", getGradient())}
+          style={{ width: `${percentage}%` }}
         />
       </div>
     </div>
   );
 }
 
-
 export default function BusinessesPage() {
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-20">
+            {/* Search Bar with Integrated Filter */}
             <div className="space-y-4">
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search businesses..." className="pl-10" />
-                </div>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2 -mb-2">
-                        {filters.map((filter, index) => (
-                            <Button key={filter} variant={index === 0 ? "secondary" : "outline"} className={`whitespace-nowrap ${index === 0 ? 'bg-primary text-primary-foreground' : ''}`}>
-                                {filter}
-                            </Button>
-                        ))}
-                    </div>
-                     <Button variant="ghost" className="hidden sm:inline-flex">
-                        <Filter className="h-4 w-4 mr-2" />
-                        Filters
-                    </Button>
-                </div>
-                <div>
-                     <Button variant="outline" className="w-full sm:w-auto justify-between">
-                        Sort by: Risk Score (High to Low)
-                        <ChevronDown className="h-4 w-4 ml-2" />
+                <div className="relative">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input
+                        placeholder="Search businesses..."
+                        className="pl-14 pr-20 h-12 rounded-full bg-surface text-body"
+                    />
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:bg-transparent"
+                    >
+                        <SlidersHorizontal className="h-4 w-4 mr-1.5" />
+                        Filter
                     </Button>
                 </div>
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Business Cards Grid */}
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {mockBusinesses.map(business => (
-                    <Card key={business.id}>
-                        <CardHeader className="p-0">
-                             <div className="relative aspect-video">
-                                <Image
+                    <Card key={business.id} className="overflow-hidden group cursor-pointer">
+                        {/* Image Section */}
+                        <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-primary/10 to-primary/5">
+                            <Image
                                 src={business.imageUrl}
                                 alt={business.name}
                                 fill
-                                className="object-cover rounded-t-lg"
+                                className="object-cover transition-transform duration-300 group-hover:scale-105"
                                 data-ai-hint={business.imageHint}
-                                />
-                             </div>
-                        </CardHeader>
-                        <CardContent className="p-4 space-y-4">
+                            />
+                            {/* Sector Badge - Absolute positioned */}
+                            <div className="absolute top-3 right-3">
+                                <Badge variant="secondary" className="backdrop-blur-md bg-background/90 shadow-sm">
+                                    {business.sector}
+                                </Badge>
+                            </div>
+                        </div>
+
+                        {/* Content Section */}
+                        <CardContent className="p-4 space-y-3">
+                            {/* Business Name and Location */}
                             <div className="space-y-1">
-                                <CardTitle className="font-headline">{business.name}</CardTitle>
-                                <div className="flex items-center gap-2">
-                                    <Badge variant="secondary">{business.sector}</Badge>
-                                    <span className="text-sm text-muted-foreground">{business.location}</span>
+                                <h3 className="text-body-lg font-semibold text-foreground leading-tight">
+                                    {business.name}
+                                </h3>
+                                <div className="flex items-center gap-1.5 text-body-sm text-muted-foreground">
+                                    <MapPin className="h-3.5 w-3.5" />
+                                    <span>{business.location}</span>
                                 </div>
                             </div>
-                            
+
+                            {/* Risk Score Bar */}
                             <RiskScoreBar score={business.riskScore} />
-                            
-                            <div className="grid grid-cols-2 gap-4 text-sm pt-2">
+
+                            {/* Financial Info */}
+                            <div className="grid grid-cols-3 gap-3 pt-2 border-t border-border/50">
                                 <div>
-                                    <p className="text-muted-foreground">Capital Needed</p>
-                                    <p className="font-medium">${business.capitalNeeded.toLocaleString()}</p>
+                                    <p className="text-caption text-muted-foreground mb-0.5">Capital</p>
+                                    <p className="text-body font-semibold text-foreground font-mono">
+                                        ${(business.capitalNeeded / 1000).toFixed(0)}k
+                                    </p>
                                 </div>
-                                 <div>
-                                    <p className="text-muted-foreground">Interest Rate</p>
-                                    <p className="font-medium">{business.interestRate}%</p>
+                                <div>
+                                    <p className="text-caption text-muted-foreground mb-0.5">Return</p>
+                                    <p className="text-body font-semibold text-success font-mono">
+                                        {business.interestRate}%
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-caption text-muted-foreground mb-0.5">Period</p>
+                                    <p className="text-body font-semibold text-foreground">
+                                        {business.repaymentPeriod}d
+                                    </p>
                                 </div>
                             </div>
-                            
-                            <Button className="w-full">View Details</Button>
+
+                            {/* Action Button */}
+                            <Button variant="ghost" className="w-full justify-between group-hover:bg-primary/[0.08] text-primary" size="sm">
+                                <span>View Details</span>
+                                <span>→</span>
+                            </Button>
                         </CardContent>
                     </Card>
                 ))}

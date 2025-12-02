@@ -4,20 +4,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowUpRight,
-  PlusCircle,
-  Store,
-  Tag,
+  TrendingUp,
   Users,
+  Tag,
   Loader2,
+  Plus,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -46,6 +44,8 @@ export default function HomePage() {
   };
 
   const totalBalance = groups.reduce((acc, group) => acc + (group.poolBalance || 0), 0);
+  const totalInvested = groups.reduce((acc, g) => acc + (g.pool?.investedAmount ? Number(g.pool.investedAmount) : 0), 0);
+  const monthlyGrowth = 234.50; // This would come from API in real app
 
   if (isLoading) {
     return (
@@ -56,138 +56,175 @@ export default function HomePage() {
   }
 
   return (
-    <div className="space-y-6">
-      <Card className="bg-primary text-primary-foreground">
-        <CardHeader>
-          <CardTitle>Welcome back, {user?.firstName || 'User'}!</CardTitle>
-          <CardDescription className="text-primary-foreground/80">
-            Across {groups.length} {groups.length === 1 ? 'group' : 'groups'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm">Total Balance</p>
-          <p className="text-4xl font-bold font-headline">
+    <div className="space-y-6 pb-20">
+      {/* Hero Balance Card with Gradient */}
+      <Card className="bg-gradient-to-b from-primary to-primary-hover text-primary-foreground shadow-premium-lg border-0 hover:shadow-premium-lg hover:translate-y-0">
+        <CardContent className="p-8">
+          <p className="text-body-sm text-primary-foreground/70 uppercase tracking-wide font-medium mb-2">
+            Your Total Balance
+          </p>
+          <p className="text-display-lg text-primary-foreground font-bold font-mono mb-3">
             ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-success" />
+            <p className="text-body-sm text-primary-foreground/80">
+              +${monthlyGrowth.toFixed(2)} this month
+            </p>
+          </div>
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Active Groups</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{groups.length}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Invested</CardTitle>
-            <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              ${groups.reduce((acc, g) => acc + (g.pool?.investedAmount ? Number(g.pool.investedAmount) : 0), 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+      {/* Stats Grid - 2x2 */}
+      <div className="grid grid-cols-2 gap-3">
+        <Card className="bg-surface border-0">
+          <CardContent className="p-4">
+            <div className="flex justify-between items-start mb-2">
+              <p className="text-body-sm text-muted-foreground font-medium">Active Groups</p>
+              <Users className="h-5 w-5 text-primary" />
             </div>
+            <p className="text-number-md text-foreground font-mono">{groups.length}</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Available Discounts</CardTitle>
-            <Tag className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">0</div>
-            <p className="text-xs text-muted-foreground mt-1">Coming soon</p>
+
+        <Card className="bg-surface border-0">
+          <CardContent className="p-4">
+            <div className="flex justify-between items-start mb-2">
+              <p className="text-body-sm text-muted-foreground font-medium">Total Invested</p>
+              <ArrowUpRight className="h-5 w-5 text-primary" />
+            </div>
+            <p className="text-number-md text-foreground font-mono">
+              ${totalInvested.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-surface border-0">
+          <CardContent className="p-4">
+            <div className="flex justify-between items-start mb-2">
+              <p className="text-body-sm text-muted-foreground font-medium">Monthly Growth</p>
+              <TrendingUp className="h-5 w-5 text-success" />
+            </div>
+            <p className="text-number-md text-success font-mono">+{((monthlyGrowth / totalBalance) * 100).toFixed(1)}%</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-surface border-0">
+          <CardContent className="p-4">
+            <div className="flex justify-between items-start mb-2">
+              <p className="text-body-sm text-muted-foreground font-medium">Discounts</p>
+              <Tag className="h-5 w-5 text-primary" />
+            </div>
+            <p className="text-number-md text-foreground font-mono">0</p>
+            <p className="text-xs text-muted-foreground mt-0.5">Coming soon</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="lg:col-span-4">
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {groups.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">No recent activity</p>
-            ) : (
-              <ul className="space-y-4">
-                <li className="text-center text-muted-foreground py-4">
-                  <p className="text-sm">Activity feed coming soon</p>
-                </li>
-              </ul>
-            )}
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" className="w-full" disabled>View All</Button>
-          </CardFooter>
-        </Card>
+      {/* Latest Updates - Horizontal Scroll */}
+      <div>
+        <h2 className="text-heading-2 font-semibold mb-4">Latest Updates</h2>
+        <div className="flex gap-3 overflow-x-auto pb-2 -mb-2 scrollbar-hide">
+          <Card className="min-w-[280px] flex-shrink-0 border-l-[3px] border-l-success border-t-0 border-r-0 border-b-0">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-start mb-2">
+                <p className="text-body font-semibold">Contribution Received</p>
+                <p className="text-caption text-muted-foreground">2h ago</p>
+              </div>
+              <p className="text-body-sm text-muted-foreground">
+                Your monthly contribution has been processed successfully
+              </p>
+            </CardContent>
+          </Card>
 
-        <div className="lg:col-span-3 space-y-6">
-            <Card className="bg-accent text-accent-foreground hover:bg-accent/90 transition-colors">
-                <Link href="/groups/create" className="block p-6">
-                    <CardHeader className="p-0">
-                        <PlusCircle className="h-8 w-8 mb-2" />
-                        <CardTitle>Create a Group</CardTitle>
-                        <CardDescription className="text-accent-foreground/80">Start saving with your community</CardDescription>
-                    </CardHeader>
-                </Link>
-            </Card>
-            <Card className="hover:bg-secondary transition-colors">
-                <Link href="/businesses" className="block p-6">
-                    <CardHeader className="p-0">
-                        <Store className="h-8 w-8 mb-2" />
-                        <CardTitle>Browse Businesses</CardTitle>
-                        <CardDescription>Discover investment opportunities</CardDescription>
-                    </CardHeader>
-                </Link>
-            </Card>
+          <Card className="min-w-[280px] flex-shrink-0 border-l-[3px] border-l-info border-t-0 border-r-0 border-b-0">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-start mb-2">
+                <p className="text-body font-semibold">New Business Available</p>
+                <p className="text-caption text-muted-foreground">1d ago</p>
+              </div>
+              <p className="text-body-sm text-muted-foreground">
+                Check out the new investment opportunities in your area
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="min-w-[280px] flex-shrink-0 border-l-[3px] border-l-warning border-t-0 border-r-0 border-b-0">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-start mb-2">
+                <p className="text-body font-semibold">Vote Required</p>
+                <p className="text-caption text-muted-foreground">2d ago</p>
+              </div>
+              <p className="text-body-sm text-muted-foreground">
+                New investment proposal waiting for your vote
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
+      {/* Your Groups */}
       <div>
-        <h2 className="text-2xl font-bold font-headline mb-4">Your Groups</h2>
+        <h2 className="text-heading-2 font-semibold mb-4">Your Groups</h2>
         {groups.length === 0 ? (
           <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground mb-4">You haven't joined any groups yet</p>
-              <Button asChild>
-                <Link href="/groups/create">Create Your First Group</Link>
-              </Button>
+            <CardContent className="py-16 text-center">
+              <div className="flex flex-col items-center gap-4">
+                <Users className="h-16 w-16 text-muted-foreground" />
+                <div>
+                  <p className="text-heading-3 font-semibold text-foreground mb-2">No groups yet</p>
+                  <p className="text-body text-muted-foreground max-w-xs mx-auto mb-6">
+                    Create your first group to start saving and investing with your community
+                  </p>
+                </div>
+                <Button asChild size="lg">
+                  <Link href="/groups/create">Create Your First Group</Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ) : (
           <div className="relative">
-            <div className="flex space-x-4 overflow-x-auto pb-4 -mb-4">
+            <div className="flex space-x-4 overflow-x-auto pb-4 -mb-4 scrollbar-hide">
               {groups.map((group) => (
                 <Card key={group.id} className="min-w-[300px] flex-shrink-0">
                   <CardHeader>
-                    <CardTitle>{group.name}</CardTitle>
-                    <Badge variant={group.role === 'Admin' ? 'default' : 'secondary'} className={group.role === 'Admin' ? 'bg-accent text-accent-foreground' : ''}>{group.role}</Badge>
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="text-body-lg font-semibold">{group.name}</CardTitle>
+                      <Badge variant={group.role === 'Admin' ? 'default' : 'secondary'}>
+                        {group.role}
+                      </Badge>
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">Pool Balance</p>
-                    <p className="text-2xl font-bold font-headline">
-                      ${(group.poolBalance || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {typeof group.members === 'number' ? group.members : group.memberCount || 0} members
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button asChild variant="secondary" className="w-full">
+                  <CardContent className="space-y-3">
+                    <div>
+                      <p className="text-body-sm text-muted-foreground mb-1">Pool Balance</p>
+                      <p className="text-number-md text-foreground font-mono">
+                        ${(group.poolBalance || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 text-body-sm text-muted-foreground">
+                      <Users className="h-4 w-4" />
+                      <span>{typeof group.members === 'number' ? group.members : group.memberCount || 0} members</span>
+                    </div>
+                    <Button asChild variant="secondary" className="w-full" size="sm">
                       <Link href={`/groups/${group.id}`}>View Details</Link>
                     </Button>
-                  </CardFooter>
+                  </CardContent>
                 </Card>
               ))}
             </div>
           </div>
         )}
       </div>
+
+      {/* Floating Action Button (FAB) */}
+      <Link
+        href="/groups/create"
+        className="fixed bottom-20 right-6 md:bottom-8 md:right-8 z-40 w-14 h-14 bg-primary hover:bg-primary-hover text-primary-foreground rounded-full shadow-[0_8px_16px_rgba(0,61,165,0.24)] hover:shadow-[0_12px_24px_rgba(0,61,165,0.32)] flex items-center justify-center transition-premium tap-feedback"
+      >
+        <Plus className="h-6 w-6" />
+      </Link>
     </div>
   );
 }

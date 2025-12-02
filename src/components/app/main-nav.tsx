@@ -38,20 +38,28 @@ export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
 
   if (isMobile) {
     return (
-      <nav className={`grid gap-1 ${allNavItems.length === 6 ? 'grid-cols-6' : 'grid-cols-5'}`}>
-        {allNavItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "flex flex-col items-center gap-1 rounded-lg p-2 text-muted-foreground",
-              pathname === item.href && "text-primary bg-primary/10"
-            )}
-          >
-            <item.icon className="h-5 w-5" />
-            <span className="text-xs font-medium">{item.label}</span>
-          </Link>
-        ))}
+      <nav className={`grid gap-0.5 ${allNavItems.length === 6 ? 'grid-cols-6' : 'grid-cols-5'}`}>
+        {allNavItems.map((item) => {
+          const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex flex-col items-center gap-1 rounded-xl py-1.5 transition-premium tap-feedback",
+                isActive
+                  ? "text-primary bg-primary/[0.06]"
+                  : "text-muted-foreground"
+              )}
+            >
+              <item.icon className="h-5 w-5" />
+              <span className={cn(
+                "text-[11px] leading-none",
+                isActive ? "font-semibold" : "font-normal"
+              )}>{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
     );
   }

@@ -2,86 +2,145 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
   :root {
-    /* Econet Theme Colors */
-    /* Deep Blue #2E3192 - Primary/Brand Color */
-    /* Red/Orange #EE3426 - Accent/Alert Color */
-    /* White #FFFFFF - Background */
-    
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    /* New Brand Colors - Econet/EcoCash Inspired Professional Blue Palette */
+    /* Primary Blue #003DA5 - Main brand color */
+    /* Interactive Blue #0052D4 - Hover states */
+    /* White #FFFFFF - Main backgrounds */
+
+    /* Base colors */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 210 19% 12%; /* #1A1D1F - Near black for main text */
+
+    /* Surface colors */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 210 19% 12%; /* #1A1D1F */
+    --surface: 220 20% 98%; /* #F8F9FB - Very light blue-gray */
+
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 238 52% 38%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 238 52% 38%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 5 85% 54%;
+    --popover-foreground: 210 19% 12%;
+
+    /* Primary palette */
+    --primary: 216 100% 32%; /* #003DA5 - Deep professional blue */
+    --primary-hover: 216 100% 42%; /* #0052D4 - Interactive blue */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Secondary palette */
+    --secondary: 220 20% 98%; /* #F8F9FB */
+    --secondary-foreground: 210 19% 12%;
+
+    /* Muted colors */
+    --muted: 220 20% 98%; /* #F8F9FB */
+    --muted-foreground: 220 13% 51%; /* #6F7787 - Medium gray for secondary text */
+
+    /* Text colors */
+    --text-primary: 210 19% 12%; /* #1A1D1F */
+    --text-secondary: 220 13% 51%; /* #6F7787 */
+    --text-tertiary: 220 12% 68%; /* #9EA3AE - Light gray for tertiary text */
+
+    /* Accent colors */
+    --accent: 216 100% 32%; /* Use primary for accent */
     --accent-foreground: 0 0% 100%;
-    --destructive: 5 85% 54%;
+
+    /* Status colors */
+    --success: 162 100% 37%; /* #00BA88 - Green for positive actions */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 100% 56%; /* #FFB020 - Amber for pending/attention */
+    --warning-foreground: 0 0% 0%;
+
+    --destructive: 4 100% 60%; /* #FF3B30 - Red for errors/destructive */
     --destructive-foreground: 0 0% 100%;
-    --success: 142 71% 45%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 238 52% 38%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.75rem;
-    --sidebar-background: 238 52% 38%;
+
+    --info: 208 100% 60%; /* #3399FF - Light blue for informational */
+    --info-foreground: 0 0% 100%;
+
+    /* Borders and inputs */
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 20% 98%; /* #F8F9FB */
+    --ring: 216 100% 32%; /* #003DA5 */
+
+    /* Chart colors */
+    --chart-1: 211 100% 40%; /* #0066CC - Chart Blue */
+    --chart-2: 162 100% 37%; /* #00BA88 - Chart Green */
+    --chart-3: 29 100% 50%; /* #FF9500 - Chart Orange */
+    --chart-4: 283 62% 59%; /* #AF52DE - Chart Purple */
+    --chart-5: 0 0% 56%; /* #8E8E93 - Chart Gray */
+
+    /* Border radius */
+    --radius: 1rem; /* 16px - Updated from 12px for more modern look */
+
+    /* Sidebar */
+    --sidebar-background: 216 100% 32%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 238 52% 38%;
+    --sidebar-primary: 216 100% 32%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 238 45% 45%;
+    --sidebar-accent: 216 100% 42%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 238 40% 35%;
-    --sidebar-ring: 238 52% 38%;
+    --sidebar-border: 216 100% 25%;
+    --sidebar-ring: 216 100% 32%;
   }
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 175 75% 40%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 33 85% 55%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 63% 45%;
-    --destructive-foreground: 210 40% 98%;
-    --success: 160 80% 40%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 175 75% 40%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Dark mode - prepared for future implementation */
+    --background: 215 28% 9%; /* #0F1419 */
+    --foreground: 0 0% 100%; /* #FFFFFF */
+
+    --card: 210 19% 12%; /* #1A1D1F */
+    --card-foreground: 0 0% 100%;
+    --surface: 210 19% 12%;
+
+    --popover: 210 19% 12%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 208 100% 60%; /* #3399FF - Lighter blue for dark mode */
+    --primary-hover: 208 100% 70%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 19% 12%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 19% 12%;
+    --muted-foreground: 220 12% 68%; /* #9EA3AE */
+
+    --text-primary: 0 0% 100%;
+    --text-secondary: 220 12% 68%;
+    --text-tertiary: 220 13% 51%;
+
+    --accent: 208 100% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --success: 162 100% 37%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 100% 56%;
+    --warning-foreground: 0 0% 0%;
+
+    --destructive: 4 100% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --info: 208 100% 60%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 210 19% 17%;
+    --input: 210 19% 12%;
+    --ring: 208 100% 60%;
+
+    --chart-1: 211 100% 40%;
+    --chart-2: 162 100% 37%;
+    --chart-3: 29 100% 50%;
+    --chart-4: 283 62% 59%;
+    --chart-5: 0 0% 56%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 208 100% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 208 100% 60%;
   }
 }
 
@@ -89,15 +148,27 @@ body {
   * {
     @apply border-border;
   }
+
   html {
-    @apply h-full;
+    @apply h-full antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   body {
     @apply h-full bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+
   #__next {
     @apply h-full;
   }
+
+  /* Typography base styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
   /* Allow scrolling on auth pages */
   html.auth-page,
   html.auth-page body,
@@ -106,4 +177,148 @@ body {
     height: auto !important;
   }
   /* Prevent scrolling on app pages - handled by app layout container */
+}
+
+/* Typography utility classes */
+@layer utilities {
+  /* Display styles */
+  .text-display-lg {
+    font-size: 2rem; /* 32px */
+    line-height: 2.375rem; /* 38px */
+    font-weight: 700;
+    letter-spacing: -0.03125rem; /* -0.5px */
+  }
+
+  .text-display-md {
+    font-size: 1.75rem; /* 28px */
+    line-height: 2.125rem; /* 34px */
+    font-weight: 700;
+    letter-spacing: -0.01875rem; /* -0.3px */
+  }
+
+  /* Heading styles */
+  .text-heading-1 {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.875rem; /* 30px */
+    font-weight: 600;
+    letter-spacing: -0.0125rem; /* -0.2px */
+  }
+
+  .text-heading-2 {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.625rem; /* 26px */
+    font-weight: 600;
+    letter-spacing: -0.00625rem; /* -0.1px */
+  }
+
+  .text-heading-3 {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 600;
+  }
+
+  /* Body styles */
+  .text-body-lg {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 400;
+  }
+
+  .text-body {
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.375rem; /* 22px */
+    font-weight: 400;
+  }
+
+  .text-body-sm {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.125rem; /* 18px */
+    font-weight: 400;
+  }
+
+  /* Caption style */
+  .text-caption {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+    font-weight: 500;
+    letter-spacing: 0.01875rem; /* 0.3px */
+    text-transform: uppercase;
+  }
+
+  /* Number styles (monospace) */
+  .text-number-lg {
+    font-size: 2rem; /* 32px */
+    line-height: 2.375rem; /* 38px */
+    font-weight: 600;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .text-number-md {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.875rem; /* 30px */
+    font-weight: 600;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .text-number {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 500;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  /* Tap feedback animation */
+  .tap-feedback {
+    transition: transform 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tap-feedback:active {
+    transform: scale(0.97);
+  }
+
+  /* Premium shadow styles */
+  .shadow-premium {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .shadow-premium-hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .shadow-premium-lg {
+    box-shadow: 0 8px 24px rgba(0, 61, 165, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Surface background */
+  .bg-surface {
+    background-color: hsl(var(--surface));
+  }
+
+  /* Text color utilities */
+  .text-text-primary {
+    color: hsl(var(--text-primary));
+  }
+
+  .text-text-secondary {
+    color: hsl(var(--text-secondary));
+  }
+
+  .text-text-tertiary {
+    color: hsl(var(--text-tertiary));
+  }
+
+  /* Smooth transitions */
+  .transition-premium {
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
