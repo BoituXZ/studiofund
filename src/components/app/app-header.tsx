@@ -27,7 +27,7 @@ export function AppHeader() {
   const { isMobile, toggleSidebar } = useSidebar();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-40 w-full border-b border-primary/20 bg-primary">
       <div className="container flex h-16 items-center">
         {isMobile && (
           <Button
@@ -48,12 +48,12 @@ export function AppHeader() {
             </div>
         )}
         <div className="flex-1 text-center sm:text-left">
-          <h1 className="text-xl font-bold font-headline">{title}</h1>
+          <h1 className="text-xl font-bold font-headline text-white">{title}</h1>
         </div>
         <div className="flex items-center justify-end">
-          <Button variant="ghost" size="icon" className="relative">
+          <Button variant="ghost" size="icon" className="relative text-white hover:bg-primary/80">
             <Bell className="h-5 w-5" />
-            <span className="absolute top-1 right-1.5 block h-2 w-2 rounded-full bg-red-500" />
+            <span className="absolute top-1 right-1.5 block h-2 w-2 rounded-full bg-accent" />
             <span className="sr-only">Notifications</span>
           </Button>
         </div>

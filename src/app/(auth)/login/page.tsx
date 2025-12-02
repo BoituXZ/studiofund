@@ -1,3 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,9 +17,43 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/auth-context";
+import { loginSchema, type LoginFormData } from "@/lib/validations/auth";
 
 export default function LoginPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const { login } = useAuth();
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    setIsSubmitting(true);
+    try {
+      await login(data.identifier, data.password);
+      toast({
+        title: "Success",
+        description: "Logged in successfully!",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to login. Please check your credentials.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -20,32 +62,50 @@ export default function LoginPage() {
           Access your HiveFund account.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="phoneOrEmail">Phone Number or Email</Label>
-          <Input id="phoneOrEmail" placeholder="e.g., +263 771 234 567" required />
-        </div>
-        <div className="space-y-2">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="identifier">Phone Number or Email</Label>
+            <Input
+              id="identifier"
+              {...register("identifier")}
+              placeholder="e.g., +263771234567 or email@example.com"
+              className={errors.identifier ? "border-destructive" : ""}
+            />
+            {errors.identifier && (
+              <p className="text-sm text-destructive">{errors.identifier.message}</p>
+            )}
+          </div>
+          <div className="space-y-2">
             <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link href="#" className="text-sm text-primary hover:underline">
-                    Forgot Password?
-                </Link>
+              <Label htmlFor="password">Password</Label>
+              <Link href="#" className="text-sm text-primary hover:underline">
+                Forgot Password?
+              </Link>
             </div>
-          <Input id="password" type="password" required />
-        </div>
-      </CardContent>
-      <CardFooter className="flex flex-col gap-4">
-        <Button className="w-full" asChild>
-          <Link href="/home">Login</Link>
-        </Button>
-        <p className="text-sm text-center text-muted-foreground">
+            <Input
+              id="password"
+              type="password"
+              {...register("password")}
+              className={errors.password ? "border-destructive" : ""}
+            />
+            {errors.password && (
+              <p className="text-sm text-destructive">{errors.password.message}</p>
+            )}
+          </div>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-4">
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Login"}
+          </Button>
+          <p className="text-sm text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
             <Link href="/register" className="text-primary hover:underline font-medium">
-                Sign Up
+              Sign Up
             </Link>
-        </p>
-      </CardFooter>
+          </p>
+        </CardFooter>
+      </form>
     </Card>
   );
 }

@@ -1,9 +1,12 @@
+"use client";
+
 import { ChevronRight, LogOut } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockUser } from "@/lib/mock-data";
+import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/hooks/use-toast";
 
 const menuItems = [
   { label: "Personal Information", href: "/profile/personal" },
@@ -15,20 +18,49 @@ const menuItems = [
 ];
 
 export default function ProfilePage() {
-  const userInitials = `${mockUser.firstName.charAt(0)}${mockUser.lastName.charAt(0)}`;
+  const { user, logout } = useAuth();
+  const { toast } = useToast();
+
+  if (!user) {
+    return null; // Or show loading state
+  }
+
+  const userInitials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`;
+  const memberSince = user.createdAt 
+    ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    : 'Recently';
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
       <Card className="bg-primary text-primary-foreground">
         <CardContent className="p-6 flex items-center gap-4">
           <Avatar className="h-20 w-20 border-2 border-primary-foreground/50">
-            {mockUser.avatarUrl && <AvatarImage src={mockUser.avatarUrl} alt={mockUser.firstName} />}
+            {user.profileImage && <AvatarImage src={user.profileImage} alt={user.firstName} />}
             <AvatarFallback className="text-2xl bg-primary-foreground text-primary">{userInitials}</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-2xl font-bold font-headline">{mockUser.firstName} {mockUser.lastName}</h1>
-            <p className="text-primary-foreground/80">{mockUser.phone}</p>
-            <p className="text-xs text-primary-foreground/60 mt-1">Member since {mockUser.memberSince}</p>
+            <h1 className="text-2xl font-bold font-headline">{user.firstName} {user.lastName}</h1>
+            <p className="text-primary-foreground/80">{user.phone}</p>
+            {user.email && (
+              <p className="text-primary-foreground/80 text-sm">{user.email}</p>
+            )}
+            <p className="text-xs text-primary-foreground/60 mt-1">Member since {memberSince}</p>
           </div>
         </CardContent>
       </Card>
@@ -75,7 +107,11 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
       
-      <Button variant="ghost" className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10">
+      <Button 
+        variant="ghost" 
+        className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
+        onClick={handleLogout}
+      >
         <LogOut className="h-5 w-5 mr-2" />
         Logout
       </Button>

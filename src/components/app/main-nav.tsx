@@ -9,12 +9,14 @@ import {
   Store,
   Tag,
   User as UserIcon,
+  Shield,
 } from "lucide-react";
 import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/contexts/auth-context";
 import type { LucideIcon } from "lucide-react";
 
 export const navItems = [
@@ -27,11 +29,17 @@ export const navItems = [
 
 export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
   const pathname = usePathname();
+  const { user } = useAuth();
+  
+  const allNavItems = [
+    ...navItems,
+    ...(user?.role === 'PLATFORM_ADMIN' ? [{ href: "/admin", label: "Admin", icon: Shield }] : []),
+  ];
 
   if (isMobile) {
     return (
-      <nav className="grid grid-cols-5 gap-1">
-        {navItems.map((item) => (
+      <nav className={`grid gap-1 ${allNavItems.length === 6 ? 'grid-cols-6' : 'grid-cols-5'}`}>
+        {allNavItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
@@ -50,11 +58,11 @@ export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
 
   return (
     <SidebarMenu>
-      {navItems.map((item) => (
+      {allNavItems.map((item) => (
         <SidebarMenuItem key={item.href}>
           <Link href={item.href} className="w-full">
             <SidebarMenuButton
-              isActive={pathname === item.href}
+              isActive={pathname === item.href || pathname?.startsWith(`${item.href}/`)}
               tooltip={{ children: item.label }}
             >
               <item.icon />
