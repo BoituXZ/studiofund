@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "onboarding-save",
+      "description": "Illustration of people pooling money together.",
+      "imageUrl": "https://images.unsplash.com/photo-1599585183326-87b1fff61c33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb21tdW5pdHklMjBzYXZpbmdzfGVufDB8fHx8MTc2NDcwMDQ2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "community savings"
+    },
+    {
+      "id": "onboarding-invest",
+      "description": "Illustration of a local business receiving funding.",
+      "imageUrl": "https://images.unsplash.com/photo-1556741533-6e6a62bd8b49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxsb2NhbCUyMGJ1c2luZXNzfGVufDB8fHx8MTc2NDcwMDQ2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "local business"
+    },
+    {
+      "id": "onboarding-earn",
+      "description": "Illustration of money growing and health coverage.",
+      "imageUrl": "https://images.unsplash.com/photo-1462899006636-339e08d1844e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmaW5hbmNpYWwlMjBncm93dGh8ZW58MHx8fHwxNzY0NzAwNDY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "financial growth"
+    },
+    {
+      "id": "empty-state-groups",
+      "description": "Illustration of people for empty groups state.",
+      "imageUrl": "https://images.unsplash.com/photo-1723202594786-69445b7164b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb21tdW5pdHklMjBwZW9wbGV8ZW58MHx8fHwxNzY0NjIwOTQxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "community people"
+    },
+    {
+      "id": "business-logo-1",
+      "description": "Logo for Chivhu Hardware",
+      "imageUrl": "https://images.unsplash.com/photo-1759493464618-70b53612ae96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxoYXJkd2FyZSUyMGxvZ298ZW58MHx8fHwxNzY0NzAwNDY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hardware logo"
+    },
+    {
+      "id": "business-logo-2",
+      "description": "Logo for Gweru Agro",
+      "imageUrl": "https://images.unsplash.com/photo-1743952198567-cb08d5073b57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhZ3JpY3VsdHVyZSUyMGxvZ298ZW58MHx8fHwxNzY0NzAwNDY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "agriculture logo"
+    }
+  ]
 }
