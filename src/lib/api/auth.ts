@@ -20,7 +20,7 @@ export interface User {
   email?: string;
   firstName: string;
   lastName: string;
-  role: 'MEMBER' | 'GROUP_ADMIN' | 'PLATFORM_ADMIN';
+  role: 'MEMBER' | 'GROUP_ADMIN' | 'BUSINESS_ADMIN' | 'PLATFORM_ADMIN';
   status: 'ACTIVE' | 'SUSPENDED' | 'INACTIVE';
   profileImage?: string;
   isVerified: boolean;

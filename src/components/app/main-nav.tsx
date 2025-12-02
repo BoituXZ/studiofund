@@ -34,6 +34,7 @@ export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
   const allNavItems = [
     ...navItems,
     ...(user?.role === 'PLATFORM_ADMIN' ? [{ href: "/admin", label: "Admin", icon: Shield }] : []),
+    ...(user?.role === 'BUSINESS_ADMIN' ? [{ href: "/business/dashboard", label: "Business", icon: Store }] : []),
   ];
 
   if (isMobile) {

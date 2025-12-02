@@ -76,7 +76,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('user', JSON.stringify(response.user));
       }
       
-      router.push('/home');
+      // Redirect based on user role
+      if (response.user.role === 'BUSINESS_ADMIN') {
+        router.push('/business/dashboard');
+      } else if (response.user.role === 'PLATFORM_ADMIN') {
+        router.push('/admin');
+      } else {
+        router.push('/home');
+      }
     } catch (error) {
       throw error;
     }
@@ -93,7 +100,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('user', JSON.stringify(response.user));
       }
       
-      router.push('/home');
+      // Redirect based on user role
+      if (response.user.role === 'BUSINESS_ADMIN') {
+        router.push('/business/dashboard');
+      } else if (response.user.role === 'PLATFORM_ADMIN') {
+        router.push('/admin');
+      } else {
+        router.push('/home');
+      }
     } catch (error) {
       throw error;
     }

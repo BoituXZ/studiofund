@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
 import { AppHeader } from "@/components/app/app-header";
 import { MainNav } from "@/components/app/main-nav";
 import { MobileNav } from "@/components/app/mobile-nav";
@@ -12,6 +17,20 @@ import {
 } from "@/components/ui/sidebar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      // Redirect business admins to their dashboard
+      if (user.role === 'BUSINESS_ADMIN') {
+        router.push('/business/dashboard');
+      } else if (user.role === 'PLATFORM_ADMIN') {
+        router.push('/admin');
+      }
+    }
+  }, [user, isLoading, router]);
+
   return (
     <ProtectedRoute>
       <SidebarProvider>
