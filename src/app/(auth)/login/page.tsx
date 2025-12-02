@@ -38,11 +38,12 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
     try {
-      await login(data.identifier, data.password);
+      // Simply redirect to home page without authentication
       toast({
         title: "Success",
         description: "Logged in successfully!",
       });
+      router.push('/home');
     } catch (error: any) {
       toast({
         title: "Error",

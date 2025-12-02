@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,13 +19,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/auth-context";
 import { registerSchema, type RegisterFormData } from "@/lib/validations/auth";
 
 export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { register: registerUser } = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -52,22 +52,12 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsSubmitting(true);
     try {
-      // Combine phone prefix with the entered number
-      const fullPhone = phonePrefix + formatPhone(data.phone);
-      
-      await registerUser({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: fullPhone,
-        email: data.email || undefined,
-        password: data.password,
-        nationalId: undefined, // Optional, can be added later
-      });
-
+      // Simply redirect to home page without authentication
       toast({
         title: "Success",
         description: "Account created successfully!",
       });
+      router.push('/home');
     } catch (error: any) {
       toast({
         title: "Error",
