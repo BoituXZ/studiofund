@@ -52,16 +52,12 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsSubmitting(true);
     try {
-      // Simply redirect to home page without authentication
-      toast({
-        title: "Success",
-        description: "Account created successfully!",
-      });
+      // Redirect to home page
       router.push('/home');
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to create account. Please try again.",
+        description: error.message || "Something went wrong.",
         variant: "destructive",
       });
     } finally {
