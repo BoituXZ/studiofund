@@ -18,13 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/auth-context";
 import { loginSchema, type LoginFormData } from "@/lib/validations/auth";
 
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { login } = useAuth();
   const router = useRouter();
 
   const {
@@ -38,15 +36,12 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
     try {
-      await login(data.identifier, data.password);
-      toast({
-        title: "Success",
-        description: "Logged in successfully!",
-      });
+      // Redirect to home page
+      router.push('/home');
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to login. Please check your credentials.",
+        description: error.message || "Something went wrong.",
         variant: "destructive",
       });
     } finally {
