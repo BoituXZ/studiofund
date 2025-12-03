@@ -6,6 +6,10 @@
   :root {
     /* HiveFund - EcoCash Inspired Theme */
     
+    --brand-blue: 202 89% 53%; /* #42A5F5 */
+    --brand-red: 356 79% 53%; /* #EF5350 */
+    --brand-red-hover: 356 79% 48%;
+
     /* Base colors - Clean White Canvas */
     --background: 0 0% 100%; /* #FFFFFF */
     --foreground: 215 28% 17%; /* #1F2937 - Gray 900 */
@@ -20,8 +24,8 @@
     --popover-foreground: 215 28% 17%;
 
     /* Primary palette - EcoCash Blue (Deep, Trustworthy) */
-    --primary: 211 100% 35%; /* #0055A4 approx */
-    --primary-hover: 211 100% 30%;
+    --primary: var(--brand-blue);
+    --primary-hover: 202 89% 48%;
     --primary-foreground: 0 0% 100%; /* White text */
 
     /* Secondary palette - Lighter Blue or Gray */
@@ -48,7 +52,7 @@
     --warning: 38 92% 50%; /* #F59E0B - Amber 500 */
     --warning-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%; /* #EF4444 - Red 500 */
+    --destructive: var(--brand-red); /* #EF4444 - Red 500 */
     --destructive-foreground: 0 0% 100%;
 
     --info: 211 100% 35%; /* Match primary */

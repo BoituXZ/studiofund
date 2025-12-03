@@ -20,6 +20,9 @@ export default {
         '18': '4.5rem', /* 72px */
         '88': '22rem', /* 352px */
       },
+      boxShadow: {
+        'lg-blue': '0 10px 15px -3px rgba(66, 165, 245, 0.2), 0 4px 6px -2px rgba(66, 165, 245, 0.05)',
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

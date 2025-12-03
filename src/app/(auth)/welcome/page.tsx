@@ -2,90 +2,87 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, TrendingUp, Users } from "lucide-react";
 
 export default function WelcomePage() {
   return (
-    <div className="min-h-screen bg-white text-gray-950 flex flex-col font-sans selection:bg-gray-100">
-      
+    <div className="min-h-screen bg-white text-gray-950 flex flex-col font-sans selection:bg-brand-blue/20">
+
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-10"
+        style={{ backgroundImage: "url('/placeholder-african-community.jpg')" }} 
+      />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 z-1 bg-gradient-to-b from-white via-white/80 to-white" />
+
       {/* Main Content */}
-      <main className="flex-1 flex flex-col justify-center px-6 sm:px-12 max-w-5xl mx-auto w-full pt-20 pb-12">
-        
+      <main className="flex-1 flex flex-col justify-center items-center px-6 sm:px-12 max-w-4xl mx-auto w-full text-center z-10">
+
         {/* Hero Section */}
-        <div className="space-y-8 mb-24">
-          <div className="space-y-6 max-w-3xl">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-gray-950 leading-[1.1]">
-              Community finance,<br />
-              <span className="text-gray-400">reimagined.</span>
+        <div className="space-y-8 my-16">
+          <div className="space-y-6">
+            <h1 className="text-5xl sm:text-7xl font-bold tracking-tighter text-gray-950 leading-[1.1]">
+              Invest in your community.
+              <br />
+              <span className="text-brand-blue">Secure your future.</span>
             </h1>
-            <p className="text-xl text-gray-500 leading-relaxed max-w-xl">
-              The professional platform for group savings, secure local investments, and community-backed insurance.
+            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+              HiveFund is the trusted digital platform for traditional savings groups. We empower communities to pool resources, fund local businesses, and build a prosperous future together.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button 
-              asChild 
-              className="h-12 px-8 text-base font-medium bg-gray-950 hover:bg-gray-800 text-white rounded-md transition-all"
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <Button
+              asChild
+              className="h-14 px-10 text-lg font-semibold bg-brand-blue hover:bg-brand-blue/90 text-white rounded-full shadow-lg transition-all transform hover:scale-105"
             >
               <Link href="/register">
-                Start Saving
+                Create a Group
               </Link>
             </Button>
-            <Button 
-              asChild 
-              variant="outline"
-              className="h-12 px-8 text-base font-medium border-gray-200 text-gray-950 hover:bg-gray-50 hover:text-gray-950 rounded-md transition-all"
+            <Button
+              asChild
+              variant="ghost"
+              className="h-14 px-10 text-lg font-semibold bg-white text-brand-blue hover:bg-brand-blue/10 rounded-full shadow-lg transition-all"
             >
               <Link href="/login">
-                Log In
+                Sign In
               </Link>
             </Button>
           </div>
         </div>
 
-        {/* Feature Grid - Vercel Style */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-gray-100 pt-16">
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-full bg-gray-50 flex items-center justify-center">
-              <Users className="h-5 w-5 text-gray-900" strokeWidth={1.5} />
-            </div>
-            <h3 className="font-semibold text-lg text-gray-900">Group Pools</h3>
-            <p className="text-gray-500 leading-relaxed text-sm">
-              Create invite-only savings groups with automated tracking and transparency.
+        {/* Features Section */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 py-16 text-left">
+          <div className="p-8 bg-white/50 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-lg-blue">
+            <h3 className="font-bold text-xl text-brand-blue mb-2">Savings Pools</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Automate your group's contributions, track payments, and maintain perfect transparency with our secure digital ledger.
             </p>
           </div>
-
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-full bg-gray-50 flex items-center justify-center">
-              <TrendingUp className="h-5 w-5 text-gray-900" strokeWidth={1.5} />
-            </div>
-            <h3 className="font-semibold text-lg text-gray-900">Verified Investments</h3>
-            <p className="text-gray-500 leading-relaxed text-sm">
-              Deploy capital into vetted local businesses with clear repayment terms.
+          <div className="p-8 bg-white/50 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-lg-blue">
+            <h3 className="font-bold text-xl text-brand-red mb-2">Community Investments</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Put your group's capital to work by investing in verified local businesses and opportunities, with clear terms and managed payouts.
             </p>
           </div>
-
-          <div className="space-y-3">
-            <div className="h-10 w-10 rounded-full bg-gray-50 flex items-center justify-center">
-              <Shield className="h-5 w-5 text-gray-900" strokeWidth={1.5} />
-            </div>
-            <h3 className="font-semibold text-lg text-gray-900">Secure Coverage</h3>
-            <p className="text-gray-500 leading-relaxed text-sm">
-              Access community-managed insurance for health and emergencies.
+          <div className="p-8 bg-white/50 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-lg-blue">
+            <h3 className="font-bold text-xl text-gray-800 mb-2">Secure by Design</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Built with bank-grade security and data privacy in mind, so you can focus on what matters: your community's financial health.
             </p>
           </div>
         </div>
-
       </main>
 
-      {/* Minimal Footer */}
-      <footer className="px-6 py-8 border-t border-gray-100 mt-auto">
-        <div className="max-w-5xl mx-auto flex justify-between items-center text-xs text-gray-400">
-          <p>© 2025 HiveFund. All rights reserved.</p>
+      {/* Footer */}
+      <footer className="w-full px-6 py-8 z-10">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
+          <p className="mb-4 sm:mb-0">© 2025 HiveFund. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="/terms" className="hover:text-gray-900 transition-colors">Terms</Link>
-            <Link href="/privacy" className="hover:text-gray-900 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-brand-blue transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-brand-blue transition-colors">Privacy Policy</Link>
           </div>
         </div>
       </footer>
