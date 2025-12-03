@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import Link from "next/link";
@@ -27,15 +28,16 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container flex h-16 items-center px-4">
+      <div className="container flex h-16 items-center px-4 relative">
         {isMobile && (
           <Button
             variant="ghost"
-            size="sm"
-            className="mr-2"
+            size="icon"
+            className="absolute left-4"
             onClick={toggleSidebar}
           >
-            Menu
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle Menu</span>
           </Button>
         )}
         {!isMobile && (
@@ -45,7 +47,7 @@ export function AppHeader() {
                 </Link>
             </div>
         )}
-        <div className="flex-1 text-center sm:text-left">
+        <div className="flex-1 text-center">
           <h1 className="text-xl font-bold font-headline text-foreground">{title}</h1>
         </div>
       </div>
