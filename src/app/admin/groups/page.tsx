@@ -3,11 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  UsersRound,
-  DollarSign,
-  Search,
-  Eye,
-  AlertTriangle,
   Loader2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -89,10 +84,8 @@ export default function AdminGroupsPage() {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search groups..."
-            className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -135,15 +128,13 @@ export default function AdminGroupsPage() {
                 <div className="grid gap-4 md:grid-cols-3">
                   <div>
                     <p className="text-sm text-muted-foreground">Members</p>
-                    <p className="text-2xl font-bold flex items-center gap-2">
-                      <UsersRound className="h-5 w-5" />
+                    <p className="text-2xl font-bold">
                       {group.memberCount}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Pool Balance</p>
-                    <p className="text-2xl font-bold flex items-center gap-2">
-                      <DollarSign className="h-5 w-5" />
+                    <p className="text-2xl font-bold">
                       ${group.poolBalance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </p>
                   </div>
@@ -157,7 +148,6 @@ export default function AdminGroupsPage() {
                 <div className="flex gap-2 mt-4">
                   <Button size="sm" variant="outline" asChild>
                     <Link href={`/groups/${group.id}`}>
-                      <Eye className="h-4 w-4 mr-2" />
                       View Details
                     </Link>
                   </Button>
@@ -172,7 +162,6 @@ export default function AdminGroupsPage() {
                         });
                       }}
                     >
-                      <AlertTriangle className="h-4 w-4 mr-2" />
                       Suspend Group
                     </Button>
                   )}

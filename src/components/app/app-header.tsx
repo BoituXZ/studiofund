@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Bell, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import Link from "next/link";
@@ -32,16 +31,15 @@ export function AppHeader() {
         {isMobile && (
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             className="mr-2"
             onClick={toggleSidebar}
           >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
+            Menu
           </Button>
         )}
         {!isMobile && (
-            <div className="mr-6 md:hidden"> {/* Only show if sidebar is somehow hidden on desktop, but likely hidden by CSS if sidebar is present */}
+            <div className="mr-6 md:hidden">
                  <Link href="/home">
                     <Logo />
                 </Link>
@@ -49,13 +47,6 @@ export function AppHeader() {
         )}
         <div className="flex-1 text-center sm:text-left">
           <h1 className="text-xl font-bold font-headline text-foreground">{title}</h1>
-        </div>
-        <div className="flex items-center justify-end">
-          <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-primary">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-destructive ring-2 ring-background" />
-            <span className="sr-only">Notifications</span>
-          </Button>
         </div>
       </div>
     </header>

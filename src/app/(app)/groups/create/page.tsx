@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -91,11 +91,9 @@ export default function CreateGroupPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/groups">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
+        <Link href="/groups" className="text-primary hover:text-primary/80 font-medium">
+          Back
+        </Link>
         <div>
           <h1 className="text-3xl font-bold font-headline">Create a Group</h1>
           <p className="text-muted-foreground">Start a new savings group with your community</p>

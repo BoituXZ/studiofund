@@ -3,13 +3,10 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  Building2,
   CheckCircle2,
   XCircle,
   AlertTriangle,
   Loader2,
-  Search,
-  Filter,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -154,10 +151,8 @@ export default function AdminBusinessesPage() {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search businesses..."
-            className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -228,7 +223,6 @@ export default function AdminBusinessesPage() {
                       size="sm"
                       onClick={() => openActionDialog(business, "verify")}
                     >
-                      <CheckCircle2 className="h-4 w-4 mr-2" />
                       Verify
                     </Button>
                   )}
@@ -238,7 +232,6 @@ export default function AdminBusinessesPage() {
                       variant="outline"
                       onClick={() => openActionDialog(business, "suspend")}
                     >
-                      <AlertTriangle className="h-4 w-4 mr-2" />
                       Suspend
                     </Button>
                   )}
@@ -248,7 +241,6 @@ export default function AdminBusinessesPage() {
                       variant="destructive"
                       onClick={() => openActionDialog(business, "blacklist")}
                     >
-                      <XCircle className="h-4 w-4 mr-2" />
                       Blacklist
                     </Button>
                   )}

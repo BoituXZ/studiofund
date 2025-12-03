@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Plus, Trash2, CreditCard } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -107,24 +106,22 @@ export default function PaymentMethodsPage() {
   const getMethodIcon = (type: string) => {
     switch (type) {
       case "mobile_money":
-        return "📱";
+        return "Mobile Money";
       case "bank_account":
-        return "🏦";
+        return "Bank Account";
       case "card":
-        return <CreditCard className="h-5 w-5" />;
+        return "Card";
       default:
-        return "💳";
+        return "Payment";
     }
   };
 
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/profile">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
+        <Link href="/profile" className="text-primary hover:text-primary/80 font-medium">
+          Back
+        </Link>
         <div>
           <h1 className="text-3xl font-bold font-headline">Payment Methods</h1>
           <p className="text-muted-foreground">Manage your payment methods</p>
@@ -143,7 +140,6 @@ export default function PaymentMethodsPage() {
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button>
-                  <Plus className="h-4 w-4 mr-2" />
                   Add Method
                 </Button>
               </DialogTrigger>
@@ -332,7 +328,6 @@ export default function PaymentMethodsPage() {
                   className="flex items-center justify-between p-4 rounded-lg border"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="text-2xl">{getMethodIcon(method.type)}</div>
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="font-medium">{method.name}</p>
@@ -342,7 +337,7 @@ export default function PaymentMethodsPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">{method.details}</p>
+                      <p className="text-sm text-muted-foreground">{getMethodIcon(method.type)} - {method.details}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -357,11 +352,11 @@ export default function PaymentMethodsPage() {
                     )}
                     <Button
                       variant="ghost"
-                      size="icon"
+                      size="sm"
                       onClick={() => handleDelete(method.id)}
                       className="text-destructive hover:text-destructive"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      Delete
                     </Button>
                   </div>
                 </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -93,11 +92,9 @@ export default function NotificationsPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/profile">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
+        <Link href="/profile" className="text-primary hover:text-primary/80 font-medium">
+          Back
+        </Link>
         <div>
           <h1 className="text-3xl font-bold font-headline">Notifications</h1>
           <p className="text-muted-foreground">Manage your notification preferences</p>

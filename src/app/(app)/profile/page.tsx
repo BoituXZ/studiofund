@@ -3,16 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/auth-context";
-import { 
-  User, 
-  Settings, 
-  CreditCard, 
-  Shield, 
-  HelpCircle, 
-  LogOut, 
-  ChevronRight,
-  FileText
-} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -28,12 +18,12 @@ export default function ProfilePage() {
   ];
 
   const menuItems = [
-    { icon: User, label: "Personal Information", href: "/profile/personal" },
-    { icon: Settings, label: "Notifications", href: "/profile/notifications" },
-    { icon: CreditCard, label: "Payment Methods", href: "/profile/payment" },
-    { icon: Shield, label: "Security", href: "/profile/security" },
-    { icon: HelpCircle, label: "Help & Support", href: "/profile/support" },
-    { icon: FileText, label: "Terms & Conditions", href: "/terms" },
+    { label: "Personal Information", href: "/profile/personal" },
+    { label: "Notifications", href: "/profile/notifications" },
+    { label: "Payment Methods", href: "/profile/payment" },
+    { label: "Security", href: "/profile/security" },
+    { label: "Help & Support", href: "/profile/support" },
+    { label: "Terms & Conditions", href: "/terms" },
   ];
 
   return (
@@ -68,31 +58,20 @@ export default function ProfilePage() {
       <Card className="shadow-sm border-border/60 overflow-hidden">
         <div className="divide-y divide-border/50">
           {menuItems.map((item) => (
-            <Link 
-              key={item.label} 
+            <Link
+              key={item.label}
               href={item.href}
               className="flex items-center justify-between p-4 hover:bg-secondary/30 transition-colors active:bg-secondary/50"
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-secondary/50 text-primary">
-                  <item.icon className="h-4 w-4" />
-                </div>
-                <span className="font-medium text-sm">{item.label}</span>
-              </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
+              <span className="font-medium text-sm">{item.label}</span>
             </Link>
           ))}
           
-          <button 
+          <button
             onClick={() => logout()}
             className="w-full flex items-center justify-between p-4 hover:bg-destructive/5 transition-colors active:bg-destructive/10 text-destructive"
           >
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-full bg-destructive/10 text-destructive">
-                <LogOut className="h-4 w-4" />
-              </div>
-              <span className="font-medium text-sm">Logout</span>
-            </div>
+            <span className="font-medium text-sm">Logout</span>
           </button>
         </div>
       </Card>

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tag, Clock, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
 export default function DiscountsPage() {
@@ -77,8 +76,7 @@ export default function DiscountsPage() {
                 <div className="space-y-1">
                   <h3 className="font-bold text-lg">{item.business}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
-                  <div className="flex items-center gap-2 pt-1">
-                    <Clock className="h-3 w-3 text-muted-foreground" />
+                  <div className="pt-1">
                     <span className="text-xs text-muted-foreground">Valid until {item.validUntil}</span>
                   </div>
                 </div>
@@ -93,8 +91,7 @@ export default function DiscountsPage() {
           ))
         ) : (
           <div className="text-center py-12 opacity-60">
-            <Tag className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
-            <p>No discounts in this category</p>
+            <p className="text-lg font-medium text-muted-foreground">No discounts in this category</p>
           </div>
         )}
       </div>

@@ -1,19 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Users,
-  UsersRound,
-  Building2,
-  TrendingUp,
-  DollarSign,
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-} from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { adminApi, type PlatformStats } from "@/lib/api/admin";
-import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminDashboard() {
@@ -61,9 +51,8 @@ export default function AdminDashboard() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalUsers}</div>
@@ -74,9 +63,8 @@ export default function AdminDashboard() {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Total Groups</CardTitle>
-            <UsersRound className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalGroups}</div>
@@ -87,9 +75,8 @@ export default function AdminDashboard() {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Businesses</CardTitle>
-            <Building2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalBusinesses}</div>
@@ -100,9 +87,8 @@ export default function AdminDashboard() {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Total Pool Balance</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
@@ -117,9 +103,8 @@ export default function AdminDashboard() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Investments</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalInvestments}</div>
@@ -130,12 +115,11 @@ export default function AdminDashboard() {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Verified Businesses</CardTitle>
-            <CheckCircle2 className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.verifiedBusinesses}</div>
+            <div className="text-2xl font-bold text-green-600">{stats.verifiedBusinesses}</div>
             <p className="text-xs text-muted-foreground">
               Available for investment
             </p>
@@ -143,12 +127,11 @@ export default function AdminDashboard() {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Pending Verification</CardTitle>
-            <Clock className="h-4 w-4 text-yellow-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.pendingBusinesses}</div>
+            <div className="text-2xl font-bold text-yellow-600">{stats.pendingBusinesses}</div>
             <p className="text-xs text-muted-foreground">
               Awaiting review
             </p>
@@ -166,42 +149,33 @@ export default function AdminDashboard() {
               href="/admin/businesses?status=PENDING_VERIFICATION"
               className="p-4 border rounded-lg hover:bg-secondary transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-yellow-600" />
-                <div>
-                  <p className="font-medium">Review Pending Businesses</p>
-                  <p className="text-sm text-muted-foreground">
-                    {stats.pendingBusinesses} businesses waiting
-                  </p>
-                </div>
+              <div>
+                <p className="font-medium">Review Pending Businesses</p>
+                <p className="text-sm text-muted-foreground">
+                  {stats.pendingBusinesses} businesses waiting
+                </p>
               </div>
             </Link>
             <Link
               href="/admin/users?status=SUSPENDED"
               className="p-4 border rounded-lg hover:bg-secondary transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <AlertCircle className="h-5 w-5 text-red-600" />
-                <div>
-                  <p className="font-medium">Manage Suspended Users</p>
-                  <p className="text-sm text-muted-foreground">
-                    {stats.suspendedUsers} suspended users
-                  </p>
-                </div>
+              <div>
+                <p className="font-medium">Manage Suspended Users</p>
+                <p className="text-sm text-muted-foreground">
+                  {stats.suspendedUsers} suspended users
+                </p>
               </div>
             </Link>
             <Link
               href="/admin/groups"
               className="p-4 border rounded-lg hover:bg-secondary transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <UsersRound className="h-5 w-5 text-primary" />
-                <div>
-                  <p className="font-medium">View All Groups</p>
-                  <p className="text-sm text-muted-foreground">
-                    {stats.totalGroups} total groups
-                  </p>
-                </div>
+              <div>
+                <p className="font-medium">View All Groups</p>
+                <p className="text-sm text-muted-foreground">
+                  {stats.totalGroups} total groups
+                </p>
               </div>
             </Link>
           </div>

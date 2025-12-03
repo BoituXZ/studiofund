@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, MapPin, TrendingUp, Info } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -56,10 +55,9 @@ export default function BusinessesPage() {
       {/* Search & Filters */}
       <div className="space-y-4 sticky top-0 bg-background z-10 pt-2 pb-2">
         <div className="relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search businesses..." 
-            className="pl-9 bg-secondary/50 border-border/60"
+          <Input
+            placeholder="Search businesses..."
+            className="bg-secondary/50 border-border/60"
           />
         </div>
         
@@ -88,7 +86,6 @@ export default function BusinessesPage() {
           >
             {/* Placeholder Image Area */}
             <div className="h-32 bg-secondary w-full flex items-center justify-center relative">
-              <TrendingUp className="h-10 w-10 text-muted-foreground/20" />
               <Badge className={`absolute top-3 right-3 ${biz.riskScore >= 8 ? 'bg-success' : biz.riskScore >= 6 ? 'bg-warning' : 'bg-destructive'}`}>
                 Score: {biz.riskScore}/10
               </Badge>
@@ -101,10 +98,7 @@ export default function BusinessesPage() {
                 </div>
                 <div className="flex items-center gap-3 text-xs text-muted-foreground">
                   <Badge variant="secondary" className="text-[10px] h-5 px-1.5 rounded-md">{biz.sector}</Badge>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    <span>{biz.location}</span>
-                  </div>
+                  <span>{biz.location}</span>
                 </div>
               </div>
 
@@ -133,10 +127,10 @@ export default function BusinessesPage() {
 
        {/* Floating Filter Button */}
        <Button
-        className="fixed bottom-20 right-6 h-12 w-12 rounded-full shadow-premium p-0 bg-white text-foreground hover:bg-gray-50 z-50 border border-border"
+        className="fixed bottom-20 right-6 rounded-full shadow-premium px-6 py-3 bg-white text-foreground hover:bg-gray-50 z-50 border border-border font-medium"
         // onClick={() => openFilterModal()}
       >
-        <Filter className="h-5 w-5" />
+        Filter
       </Button>
     </div>
   );

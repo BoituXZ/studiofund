@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Camera } from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -55,11 +54,9 @@ export default function PersonalInformationPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/profile">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
+        <Link href="/profile" className="text-primary hover:text-primary/80 font-medium">
+          Back
+        </Link>
         <div>
           <h1 className="text-3xl font-bold font-headline">Personal Information</h1>
           <p className="text-muted-foreground">Update your personal details</p>
@@ -79,7 +76,6 @@ export default function PersonalInformationPage() {
             </Avatar>
             <div className="space-y-2">
               <Button variant="outline" size="sm">
-                <Camera className="h-4 w-4 mr-2" />
                 Change Photo
               </Button>
               <p className="text-xs text-muted-foreground">

@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Search, Plus, Filter, Users } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -55,10 +54,9 @@ export default function GroupsPage() {
       {/* Header & Search */}
       <div className="space-y-4 sticky top-0 bg-background z-10 pt-2 pb-2">
         <div className="relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search your groups..." 
-            className="pl-9 bg-secondary/50 border-border/60 focus:bg-white transition-colors"
+          <Input
+            placeholder="Search your groups..."
+            className="bg-secondary/50 border-border/60 focus:bg-white transition-colors"
           />
         </div>
         
@@ -104,8 +102,7 @@ export default function GroupsPage() {
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-bold text-lg text-foreground">{group.name}</h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
-                      <Users className="h-3.5 w-3.5" />
+                    <div className="text-sm text-muted-foreground mt-0.5">
                       <span>{group.members} members</span>
                     </div>
                   </div>
@@ -143,9 +140,6 @@ export default function GroupsPage() {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-12 text-center space-y-4 opacity-80">
-            <div className="h-24 w-24 rounded-full bg-secondary flex items-center justify-center">
-              <Users className="h-10 w-10 text-muted-foreground/50" />
-            </div>
             <div className="space-y-1">
               <h3 className="font-semibold text-lg">No groups found</h3>
               <p className="text-sm text-muted-foreground max-w-xs mx-auto">
@@ -158,10 +152,10 @@ export default function GroupsPage() {
 
       {/* Floating Action Button */}
       <Button
-        className="fixed bottom-20 right-6 h-14 w-14 rounded-full shadow-premium-lg p-0 bg-secondary text-secondary-foreground hover:bg-secondary/90 z-50 border-2 border-primary/10"
+        className="fixed bottom-20 right-6 rounded-full shadow-premium-lg px-6 py-3 bg-secondary text-secondary-foreground hover:bg-secondary/90 z-50 border-2 border-primary/10 font-medium"
         onClick={() => router.push('/groups/create')}
       >
-        <Plus className="h-6 w-6 text-primary" />
+        Create Group
       </Button>
     </div>
   );

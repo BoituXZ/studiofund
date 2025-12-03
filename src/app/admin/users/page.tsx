@@ -3,12 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  Users,
   UserCheck,
   UserX,
-  Shield,
-  ShieldCheck,
-  Search,
   Loader2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -107,10 +103,8 @@ export default function AdminUsersPage() {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search users..."
-            className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -142,8 +136,7 @@ export default function AdminUsersPage() {
       {users.length === 0 ? (
         <Card>
           <CardContent className="py-16 text-center">
-            <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="text-muted-foreground mb-2">No users found</p>
+            <p className="text-lg font-medium text-muted-foreground mb-2">No users found</p>
             <p className="text-sm text-muted-foreground">
               User management endpoints need to be implemented in the backend
             </p>
@@ -178,13 +171,11 @@ export default function AdminUsersPage() {
                     <p className="text-sm text-muted-foreground">Verification</p>
                     <p className="font-medium">
                       {user.isVerified ? (
-                        <span className="flex items-center gap-1 text-green-600">
-                          <UserCheck className="h-4 w-4" />
+                        <span className="text-green-600">
                           Verified
                         </span>
                       ) : (
-                        <span className="flex items-center gap-1 text-muted-foreground">
-                          <UserX className="h-4 w-4" />
+                        <span className="text-muted-foreground">
                           Not Verified
                         </span>
                       )}
@@ -227,7 +218,6 @@ export default function AdminUsersPage() {
                         }
                       }}
                     >
-                      <UserX className="h-4 w-4 mr-2" />
                       Suspend
                     </Button>
                   )}
@@ -251,7 +241,6 @@ export default function AdminUsersPage() {
                         }
                       }}
                     >
-                      <UserCheck className="h-4 w-4 mr-2" />
                       Activate
                     </Button>
                   )}
