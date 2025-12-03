@@ -68,6 +68,8 @@ export default {
           DEFAULT: 'hsl(var(--info))',
           foreground: 'hsl(var(--info-foreground))',
         },
+        'brand-blue': 'hsl(var(--brand-blue))',
+        'brand-red': 'hsl(var(--brand-red))',
         text: {
           primary: 'hsl(var(--text-primary))',
           secondary: 'hsl(var(--text-secondary))',
