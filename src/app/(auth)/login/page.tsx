@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/auth-context";
 import { loginSchema, type LoginFormData } from "@/lib/validations/auth";
+import { Logo } from "@/components/logo";
 
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,57 +56,62 @@ export default function LoginPage() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="font-headline text-2xl">Login</CardTitle>
-        <CardDescription>
-          Access your HiveFund account.
-        </CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="identifier">Phone Number or Email</Label>
-            <Input
-              id="identifier"
-              {...register("identifier")}
-              placeholder="e.g., +263771234567 or email@example.com"
-              className={errors.identifier ? "border-destructive" : ""}
-            />
-            {errors.identifier && (
-              <p className="text-sm text-destructive">{errors.identifier.message}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
-              <Link href="#" className="text-sm text-primary hover:underline">
-                Forgot Password?
-              </Link>
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-gray-50">
+      <div className="mb-8">
+        <Logo variant="dark" />
+      </div>
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="font-headline text-2xl">Login</CardTitle>
+          <CardDescription>
+            Access your HiveFund account.
+          </CardDescription>
+        </CardHeader>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="identifier">Phone Number or Email</Label>
+              <Input
+                id="identifier"
+                {...register("identifier")}
+                placeholder="e.g., +263771234567 or email@example.com"
+                className={errors.identifier ? "border-destructive" : ""}
+              />
+              {errors.identifier && (
+                <p className="text-sm text-destructive">{errors.identifier.message}</p>
+              )}
             </div>
-            <Input
-              id="password"
-              type="password"
-              {...register("password")}
-              className={errors.password ? "border-destructive" : ""}
-            />
-            {errors.password && (
-              <p className="text-sm text-destructive">{errors.password.message}</p>
-            )}
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-col gap-4">
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Logging in..." : "Login"}
-          </Button>
-          <p className="text-sm text-center text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-primary hover:underline font-medium">
-              Sign Up
-            </Link>
-          </p>
-        </CardFooter>
-      </form>
-    </Card>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <Link href="#" className="text-sm text-primary hover:underline">
+                  Forgot Password?
+                </Link>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                {...register("password")}
+                className={errors.password ? "border-destructive" : ""}
+              />
+              {errors.password && (
+                <p className="text-sm text-destructive">{errors.password.message}</p>
+              )}
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col gap-4">
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Logging in..." : "Login"}
+            </Button>
+            <p className="text-sm text-center text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <Link href="/register" className="text-primary hover:underline font-medium">
+                Sign Up
+              </Link>
+            </p>
+          </CardFooter>
+        </form>
+      </Card>
+    </div>
   );
 }

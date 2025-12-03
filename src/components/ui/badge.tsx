@@ -9,17 +9,17 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary/[0.06] text-primary",
+          "bg-primary/10 text-primary hover:bg-primary/20",
         secondary:
-          "bg-[#F4F5F7] text-[#6B778C]",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive:
-          "bg-[#FFEBE9] text-[#DE350B]",
+          "bg-destructive/10 text-destructive hover:bg-destructive/20",
         success:
-          "bg-[#E6F9F3] text-[#00875A]",
+          "bg-success/10 text-success hover:bg-success/20",
         warning:
-          "bg-[#FFF4E6] text-[#FF991F]",
+          "bg-warning/15 text-amber-700 hover:bg-warning/25", /* Warning foreground is usually black, so this might be high contrast. If warning-foreground is white, this is bad. Let's use a specific class or text-amber-700 */
         info:
-          "bg-[#E6F2FF] text-[#0052CC]",
+          "bg-info/10 text-info hover:bg-info/20",
         outline: "border border-border text-foreground bg-transparent",
       },
     },

@@ -4,143 +4,140 @@
 
 @layer base {
   :root {
-    /* New Brand Colors - Econet/EcoCash Inspired Professional Blue Palette */
-    /* Primary Blue #003DA5 - Main brand color */
-    /* Interactive Blue #0052D4 - Hover states */
-    /* White #FFFFFF - Main backgrounds */
-
-    /* Base colors */
+    /* HiveFund - EcoCash Inspired Theme */
+    
+    /* Base colors - Clean White Canvas */
     --background: 0 0% 100%; /* #FFFFFF */
-    --foreground: 210 19% 12%; /* #1A1D1F - Near black for main text */
+    --foreground: 215 28% 17%; /* #1F2937 - Gray 900 */
 
     /* Surface colors */
     --card: 0 0% 100%; /* #FFFFFF */
-    --card-foreground: 210 19% 12%; /* #1A1D1F */
-    --surface: 220 20% 98%; /* #F8F9FB - Very light blue-gray */
+    --card-foreground: 215 28% 17%;
+    --surface: 0 0% 100%; /* All white surfaces for cleanliness */
 
     /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 210 19% 12%;
+    --popover-foreground: 215 28% 17%;
 
-    /* Primary palette */
-    --primary: 216 100% 32%; /* #003DA5 - Deep professional blue */
-    --primary-hover: 216 100% 42%; /* #0052D4 - Interactive blue */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    /* Primary palette - EcoCash Blue (Deep, Trustworthy) */
+    --primary: 211 100% 35%; /* #0055A4 approx */
+    --primary-hover: 211 100% 30%;
+    --primary-foreground: 0 0% 100%; /* White text */
 
-    /* Secondary palette */
-    --secondary: 220 20% 98%; /* #F8F9FB */
-    --secondary-foreground: 210 19% 12%;
+    /* Secondary palette - Lighter Blue or Gray */
+    --secondary: 210 40% 96%; /* #F1F5F9 */
+    --secondary-foreground: 215 28% 17%;
 
     /* Muted colors */
-    --muted: 220 20% 98%; /* #F8F9FB */
-    --muted-foreground: 220 13% 51%; /* #6F7787 - Medium gray for secondary text */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%; /* #6B7280 - Gray 500 */
 
     /* Text colors */
-    --text-primary: 210 19% 12%; /* #1A1D1F */
-    --text-secondary: 220 13% 51%; /* #6F7787 */
-    --text-tertiary: 220 12% 68%; /* #9EA3AE - Light gray for tertiary text */
+    --text-primary: 215 28% 17%; /* Gray 900 */
+    --text-secondary: 215 16% 47%; /* Gray 500 */
+    --text-tertiary: 215 14% 65%; /* Gray 400 */
 
-    /* Accent colors */
-    --accent: 216 100% 32%; /* Use primary for accent */
-    --accent-foreground: 0 0% 100%;
+    /* Accent colors - Can be same as Primary or a subtle variation */
+    --accent: 211 100% 95%; /* Very light blue tint */
+    --accent-foreground: 211 100% 35%;
 
     /* Status colors */
-    --success: 162 100% 37%; /* #00BA88 - Green for positive actions */
+    --success: 142 76% 36%; /* #16A34A - Green 600 */
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 100% 56%; /* #FFB020 - Amber for pending/attention */
-    --warning-foreground: 0 0% 0%;
+    --warning: 38 92% 50%; /* #F59E0B - Amber 500 */
+    --warning-foreground: 0 0% 100%;
 
-    --destructive: 4 100% 60%; /* #FF3B30 - Red for errors/destructive */
+    --destructive: 0 84% 60%; /* #EF4444 - Red 500 */
     --destructive-foreground: 0 0% 100%;
 
-    --info: 208 100% 60%; /* #3399FF - Light blue for informational */
+    --info: 211 100% 35%; /* Match primary */
     --info-foreground: 0 0% 100%;
 
     /* Borders and inputs */
-    --border: 220 13% 91%; /* #E5E7EB */
-    --input: 220 20% 98%; /* #F8F9FB */
-    --ring: 216 100% 32%; /* #003DA5 */
+    --border: 214 32% 91%; /* #E5E7EB - Gray 200 */
+    --input: 214 32% 91%;
+    --ring: 211 100% 35%;
 
     /* Chart colors */
-    --chart-1: 211 100% 40%; /* #0066CC - Chart Blue */
-    --chart-2: 162 100% 37%; /* #00BA88 - Chart Green */
-    --chart-3: 29 100% 50%; /* #FF9500 - Chart Orange */
-    --chart-4: 283 62% 59%; /* #AF52DE - Chart Purple */
-    --chart-5: 0 0% 56%; /* #8E8E93 - Chart Gray */
+    --chart-1: 211 100% 35%;
+    --chart-2: 142 76% 36%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 262 83% 58%;
+    --chart-5: 0 0% 60%;
 
-    /* Border radius */
-    --radius: 1rem; /* 16px - Updated from 12px for more modern look */
+    /* Radius */
+    --radius: 0.5rem; /* 8px - Standard, professional */
 
     /* Sidebar */
-    --sidebar-background: 216 100% 32%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 216 100% 32%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 215 28% 17%;
+    --sidebar-primary: 211 100% 35%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 216 100% 42%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 216 100% 25%;
-    --sidebar-ring: 216 100% 32%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 211 100% 35%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 211 100% 35%;
   }
   .dark {
-    /* Dark mode - prepared for future implementation */
-    --background: 215 28% 9%; /* #0F1419 */
-    --foreground: 0 0% 100%; /* #FFFFFF */
+    /* Dark mode strictly follows structure but optimized for dark */
+    --background: 215 28% 10%;
+    --foreground: 0 0% 100%;
 
-    --card: 210 19% 12%; /* #1A1D1F */
+    --card: 215 28% 12%;
     --card-foreground: 0 0% 100%;
-    --surface: 210 19% 12%;
+    --surface: 215 28% 12%;
 
-    --popover: 210 19% 12%;
+    --popover: 215 28% 12%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 208 100% 60%; /* #3399FF - Lighter blue for dark mode */
-    --primary-hover: 208 100% 70%;
+    --primary: 211 100% 60%; /* Lighter blue for dark mode */
+    --primary-hover: 211 100% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 19% 12%;
+    --secondary: 215 28% 15%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 19% 12%;
-    --muted-foreground: 220 12% 68%; /* #9EA3AE */
+    --muted: 215 28% 15%;
+    --muted-foreground: 215 20% 65%;
 
     --text-primary: 0 0% 100%;
-    --text-secondary: 220 12% 68%;
-    --text-tertiary: 220 13% 51%;
+    --text-secondary: 215 20% 65%;
+    --text-tertiary: 215 20% 50%;
 
-    --accent: 208 100% 60%;
+    --accent: 215 28% 15%;
     --accent-foreground: 0 0% 100%;
 
-    --success: 162 100% 37%;
+    --success: 142 70% 45%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 100% 56%;
+    --warning: 38 92% 50%;
     --warning-foreground: 0 0% 0%;
 
-    --destructive: 4 100% 60%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --info: 208 100% 60%;
+    --info: 211 100% 60%;
     --info-foreground: 0 0% 100%;
 
-    --border: 210 19% 17%;
-    --input: 210 19% 12%;
-    --ring: 208 100% 60%;
+    --border: 215 28% 20%;
+    --input: 215 28% 20%;
+    --ring: 211 100% 60%;
 
-    --chart-1: 211 100% 40%;
-    --chart-2: 162 100% 37%;
-    --chart-3: 29 100% 50%;
-    --chart-4: 283 62% 59%;
+    --chart-1: 211 100% 60%;
+    --chart-2: 142 70% 45%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 262 83% 58%;
     --chart-5: 0 0% 56%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 208 100% 60%;
+    --sidebar-background: 215 28% 10%;
+    --sidebar-foreground: 215 20% 90%;
+    --sidebar-primary: 211 100% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 208 100% 60%;
+    --sidebar-accent: 215 28% 15%;
+    --sidebar-accent-foreground: 215 20% 90%;
+    --sidebar-border: 215 28% 20%;
+    --sidebar-ring: 211 100% 60%;
   }
 }
 

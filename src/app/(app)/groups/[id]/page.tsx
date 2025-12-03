@@ -185,10 +185,12 @@ export default function GroupDetailsPage({ params }: GroupDetailsPageProps) {
       </div>
 
       <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="members">Members</TabsTrigger>
-          <TabsTrigger value="transactions">Transactions</TabsTrigger>
+        <TabsList className="grid grid-cols-5 w-full h-auto p-1">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+          <TabsTrigger value="pool" className="text-xs sm:text-sm">Pool</TabsTrigger>
+          <TabsTrigger value="members" className="text-xs sm:text-sm">Members</TabsTrigger>
+          <TabsTrigger value="investments" className="text-xs sm:text-sm">Invest</TabsTrigger>
+          <TabsTrigger value="claims" className="text-xs sm:text-sm">Claims</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
@@ -221,35 +223,46 @@ export default function GroupDetailsPage({ params }: GroupDetailsPageProps) {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
 
-          {transactions.length > 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-4">
-                  {transactions.slice(0, 5).map((tx) => (
-                    <li key={tx.id} className="flex items-start gap-3">
-                      <div className="h-2 w-2 rounded-full bg-primary mt-2" />
-                      <div className="flex-1">
-                        <p className="text-sm">
-                          {tx.type === 'CONTRIBUTION' 
-                            ? `Contribution from ${tx.contribution?.member.user.firstName} ${tx.contribution?.member.user.lastName}`
-                            : tx.type === 'INVESTMENT'
-                            ? `Investment: ${tx.investment?.business.name || tx.description}`
-                            : tx.description || tx.type}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {format(new Date(tx.createdAt), "MMM d, yyyy 'at' h:mm a")}
-                        </p>
+        <TabsContent value="pool" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Transaction History</CardTitle>
+              <CardDescription>All transactions for this group</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {transactions.length === 0 ? (
+                <p className="text-center text-muted-foreground py-8">No transactions yet</p>
+              ) : (
+                <div className="space-y-4">
+                  {transactions.map((tx) => {
+                    const amount = Number(tx.amount);
+                    const isNegative = amount < 0;
+                    const description = tx.type === 'CONTRIBUTION'
+                      ? `Contribution from ${tx.contribution?.member.user.firstName} ${tx.contribution?.member.user.lastName}`
+                      : tx.type === 'INVESTMENT'
+                      ? `Investment: ${tx.investment?.business.name || tx.description || 'Investment'}`
+                      : tx.description || tx.type;
+                    
+                    return (
+                      <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg border">
+                        <div>
+                          <p className="font-medium">{description}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {format(new Date(tx.createdAt), "MMM d, yyyy 'at' h:mm a")}
+                          </p>
+                        </div>
+                        <div className={`text-right font-medium ${isNegative ? "text-destructive" : "text-green-600"}`}>
+                          {!isNegative ? "+" : ""}${Math.abs(amount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </div>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          )}
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="members" className="space-y-4">
@@ -355,42 +368,28 @@ export default function GroupDetailsPage({ params }: GroupDetailsPageProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="transactions" className="space-y-4">
+        <TabsContent value="investments" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Transaction History</CardTitle>
-              <CardDescription>All transactions for this group</CardDescription>
+               <CardTitle>Investments</CardTitle>
+               <CardDescription>Active and past investments</CardDescription>
             </CardHeader>
-            <CardContent>
-              {transactions.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8">No transactions yet</p>
-              ) : (
-                <div className="space-y-4">
-                  {transactions.map((tx) => {
-                    const amount = Number(tx.amount);
-                    const isNegative = amount < 0;
-                    const description = tx.type === 'CONTRIBUTION'
-                      ? `Contribution from ${tx.contribution?.member.user.firstName} ${tx.contribution?.member.user.lastName}`
-                      : tx.type === 'INVESTMENT'
-                      ? `Investment: ${tx.investment?.business.name || tx.description || 'Investment'}`
-                      : tx.description || tx.type;
-                    
-                    return (
-                      <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg border">
-                        <div>
-                          <p className="font-medium">{description}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {format(new Date(tx.createdAt), "MMM d, yyyy 'at' h:mm a")}
-                          </p>
-                        </div>
-                        <div className={`text-right font-medium ${isNegative ? "text-destructive" : "text-green-600"}`}>
-                          {!isNegative ? "+" : ""}${Math.abs(amount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+            <CardContent className="text-center py-8 text-muted-foreground">
+               <p>No active investments.</p>
+               {isAdmin && <Button className="mt-4" variant="outline">Propose Investment</Button>}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="claims" className="space-y-4">
+           <Card>
+            <CardHeader>
+               <CardTitle>Claims</CardTitle>
+               <CardDescription>Member insurance claims</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center py-8 text-muted-foreground">
+               <p>No claims found.</p>
+               <Button className="mt-4" variant="outline">Submit Claim</Button>
             </CardContent>
           </Card>
         </TabsContent>
