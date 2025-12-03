@@ -68,11 +68,8 @@ export default function DiscountsPage() {
       <div className="space-y-4">
         {filteredDiscounts.length > 0 ? (
           filteredDiscounts.map((item) => (
-            <Card key={item.id} className="shadow-sm border-border/60 relative overflow-hidden group">
-              {/* Decorative side bar */}
-              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary" />
-              
-              <CardContent className="p-5 pl-6 flex justify-between items-center">
+            <Card key={item.id} className="shadow-sm border-border/60">
+              <CardContent className="p-5 flex justify-between items-center">
                 <div className="space-y-1">
                   <h3 className="font-bold text-lg">{item.business}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>

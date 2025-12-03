@@ -86,7 +86,7 @@ export default function BusinessesPage() {
           >
             {/* Placeholder Image Area */}
             <div className="h-32 bg-secondary w-full flex items-center justify-center relative">
-              <Badge className={`absolute top-3 right-3 ${biz.riskScore >= 8 ? 'bg-success' : biz.riskScore >= 6 ? 'bg-warning' : 'bg-destructive'}`}>
+              <Badge className="absolute top-3 right-3 bg-primary text-white">
                 Score: {biz.riskScore}/10
               </Badge>
             </div>
@@ -109,7 +109,7 @@ export default function BusinessesPage() {
                 </div>
                 <div>
                   <span className="text-[10px] text-muted-foreground uppercase font-bold">Interest</span>
-                  <p className="text-number font-semibold text-success">{biz.interest}%</p>
+                  <p className="text-number font-semibold text-primary">{biz.interest}%</p>
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] text-muted-foreground uppercase font-bold">Term</span>

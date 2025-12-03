@@ -4,18 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
+  House,
+  Users,
+  Store,
+  Tag,
+  User as UserIcon,
+  Shield,
+} from "lucide-react";
+import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/auth-context";
+import type { LucideIcon } from "lucide-react";
 
 export const navItems = [
-  { href: "/home", label: "Home" },
-  { href: "/groups", label: "Groups" },
-  { href: "/businesses", label: "Businesses" },
-  { href: "/discounts", label: "Discounts" },
-  { href: "/profile", label: "Profile" },
+  { href: "/home", label: "Home", icon: House },
+  { href: "/groups", label: "Groups", icon: Users },
+  { href: "/businesses", label: "Businesses", icon: Store },
+  { href: "/discounts", label: "Discounts", icon: Tag },
+  { href: "/profile", label: "Profile", icon: UserIcon },
 ];
 
 export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
@@ -24,7 +33,7 @@ export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
   
   const allNavItems = [
     ...navItems,
-    ...(user?.role === 'PLATFORM_ADMIN' ? [{ href: "/admin", label: "Admin" }] : []),
+    ...(user?.role === 'PLATFORM_ADMIN' ? [{ href: "/admin", label: "Admin", icon: Shield }] : []),
   ];
 
   if (isMobile) {
@@ -37,13 +46,14 @@ export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center justify-center rounded-lg py-2 px-1 transition-premium tap-feedback text-[11px]",
+                "flex flex-col items-center gap-1 rounded-lg py-1.5 px-1 transition-premium tap-feedback",
                 isActive
-                  ? "bg-primary text-white font-semibold"
-                  : "text-foreground font-normal"
+                  ? "bg-primary text-white"
+                  : "text-foreground"
               )}
             >
-              {item.label}
+              <item.icon className="h-5 w-5" />
+              <span className="text-[10px] leading-none font-medium">{item.label}</span>
             </Link>
           );
         })}
@@ -60,6 +70,7 @@ export function MainNav({ isMobile = false }: { isMobile?: boolean }) {
               isActive={pathname === item.href || pathname?.startsWith(`${item.href}/`)}
               tooltip={{ children: item.label }}
             >
+              <item.icon />
               <span>{item.label}</span>
             </SidebarMenuButton>
           </Link>
