@@ -27,8 +27,8 @@ export function AppHeader() {
   const { isMobile, toggleSidebar } = useSidebar();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-primary/20 bg-primary">
-      <div className="container flex h-16 items-center">
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
+      <div className="container flex h-16 items-center px-4">
         {isMobile && (
           <Button
             variant="ghost"
@@ -41,19 +41,19 @@ export function AppHeader() {
           </Button>
         )}
         {!isMobile && (
-            <div className="mr-6">
+            <div className="mr-6 md:hidden"> {/* Only show if sidebar is somehow hidden on desktop, but likely hidden by CSS if sidebar is present */}
                  <Link href="/home">
                     <Logo />
                 </Link>
             </div>
         )}
         <div className="flex-1 text-center sm:text-left">
-          <h1 className="text-xl font-bold font-headline text-white">{title}</h1>
+          <h1 className="text-xl font-bold font-headline text-foreground">{title}</h1>
         </div>
         <div className="flex items-center justify-end">
-          <Button variant="ghost" size="icon" className="relative text-white hover:bg-primary/80">
+          <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-primary">
             <Bell className="h-5 w-5" />
-            <span className="absolute top-1 right-1.5 block h-2 w-2 rounded-full bg-accent" />
+            <span className="absolute top-2 right-2 block h-2 w-2 rounded-full bg-destructive ring-2 ring-background" />
             <span className="sr-only">Notifications</span>
           </Button>
         </div>

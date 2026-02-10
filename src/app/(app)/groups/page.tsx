@@ -1,187 +1,167 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Plus, Search, Loader2 } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { groupsApi, type Group } from "@/lib/api/groups";
-import { useToast } from "@/hooks/use-toast";
+import { Search, Plus, Filter, Users } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function GroupsPage() {
-  const [groups, setGroups] = useState<Group[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterRole, setFilterRole] = useState<"all" | "Admin" | "Member">("all");
-  const { toast } = useToast();
+  const router = useRouter();
+  const [filter, setFilter] = useState<"all" | "admin" | "member">("all");
 
-  const emptyStateImage = PlaceHolderImages.find(
-    (img) => img.id === "empty-state-groups"
-  );
+  // Mock Data
+  const groups = [
+    { 
+      id: 1, 
+      name: "Mbare Vendors", 
+      role: "admin", 
+      balance: 540.00, 
+      members: 15, 
+      contribution: { paid: 20, total: 20 },
+      nextDue: "15 Dec"
+    },
+    { 
+      id: 2, 
+      name: "Family Savings", 
+      role: "member", 
+      balance: 1200.00, 
+      members: 6, 
+      contribution: { paid: 50, total: 50 },
+      nextDue: "01 Jan"
+    },
+    { 
+      id: 3, 
+      name: "Church Building Fund", 
+      role: "member", 
+      balance: 890.50, 
+      members: 24, 
+      contribution: { paid: 0, total: 10 }, // Behind
+      nextDue: "05 Dec"
+    },
+  ];
 
-  useEffect(() => {
-    loadGroups();
-  }, []);
-
-  const loadGroups = async () => {
-    try {
-      setIsLoading(true);
-      const data = await groupsApi.getAll();
-      setGroups(data);
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to load groups",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const filteredGroups = groups.filter((group) => {
-    const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      group.description?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesRole = filterRole === "all" || group.role === filterRole;
-    return matchesSearch && matchesRole;
+  const filteredGroups = groups.filter(g => {
+    if (filter === "all") return true;
+    return g.role === filter;
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (groups.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center text-center py-16">
-        {emptyStateImage && (
-          <Image
-            src={emptyStateImage.imageUrl}
-            alt="No groups illustration"
-            width={200}
-            height={150}
-            className="mb-6"
-            data-ai-hint={emptyStateImage.imageHint}
-          />
-        )}
-        <h2 className="text-2xl font-bold font-headline">
-          You haven't joined any groups yet
-        </h2>
-        <p className="mt-2 text-muted-foreground">
-          Create a new group or wait for an invitation.
-        </p>
-        <Button asChild className="mt-6" style={{ backgroundColor: "hsl(var(--accent))", color: "hsl(var(--accent-foreground))" }}>
-          <Link href="/groups/create">Create Group</Link>
-        </Button>
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row gap-4 justify-between">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <div className="space-y-6 pb-20 min-h-screen bg-background">
+      {/* Header & Search */}
+      <div className="space-y-4 sticky top-0 bg-background z-10 pt-2 pb-2">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input 
             placeholder="Search your groups..." 
-            className="pl-10"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 bg-secondary/50 border-border/60 focus:bg-white transition-colors"
           />
         </div>
-        <div className="flex items-center gap-2">
+        
+        {/* Filter Chips */}
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           <Button 
-            variant={filterRole === "all" ? "secondary" : "outline"}
-            className={filterRole === "all" ? "bg-primary text-primary-foreground" : ""}
-            onClick={() => setFilterRole("all")}
+            variant={filter === "all" ? "default" : "outline"} 
+            size="sm" 
+            className="rounded-full px-4 h-8 text-xs"
+            onClick={() => setFilter("all")}
           >
             All
           </Button>
           <Button 
-            variant={filterRole === "Admin" ? "secondary" : "outline"}
-            className={filterRole === "Admin" ? "bg-primary text-primary-foreground" : ""}
-            onClick={() => setFilterRole("Admin")}
+            variant={filter === "admin" ? "default" : "outline"} 
+            size="sm" 
+            className="rounded-full px-4 h-8 text-xs"
+            onClick={() => setFilter("admin")}
           >
             Admin
           </Button>
           <Button 
-            variant={filterRole === "Member" ? "secondary" : "outline"}
-            className={filterRole === "Member" ? "bg-primary text-primary-foreground" : ""}
-            onClick={() => setFilterRole("Member")}
+            variant={filter === "member" ? "default" : "outline"} 
+            size="sm" 
+            className="rounded-full px-4 h-8 text-xs"
+            onClick={() => setFilter("member")}
           >
             Member
           </Button>
         </div>
       </div>
 
-      {filteredGroups.length === 0 ? (
-        <div className="text-center py-8 text-muted-foreground">
-          <p>No groups found matching your search.</p>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {filteredGroups.map((group) => (
-            <Card key={group.id} className="overflow-hidden">
-              <Link href={`/groups/${group.id}`}>
-                <div className="hover:bg-secondary/50 transition-colors">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <CardTitle>{group.name}</CardTitle>
-                      <Badge variant={group.role === 'Admin' ? 'default' : 'secondary'} className={group.role === 'Admin' ? 'bg-accent text-accent-foreground' : 'bg-secondary text-secondary-foreground'}>
-                        {group.role}
-                      </Badge>
+      {/* Groups List */}
+      <div className="space-y-4">
+        {filteredGroups.length > 0 ? (
+          filteredGroups.map((group) => (
+            <Card 
+              key={group.id} 
+              className="shadow-premium hover:shadow-premium-hover transition-premium border-border/60 cursor-pointer active:scale-[0.98]"
+              onClick={() => router.push(`/groups/${group.id}`)}
+            >
+              <CardContent className="p-5 space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-lg text-foreground">{group.name}</h3>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
+                      <Users className="h-3.5 w-3.5" />
+                      <span>{group.members} members</span>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Pool Balance</p>
-                        <p className="text-xl font-bold font-headline">
-                          ${(group.poolBalance || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </p>
-                      </div>
-                      {group.yourContribution && (
-                        <div className="w-full sm:w-48">
-                          <p className="text-sm text-muted-foreground mb-1">
-                            Your Contribution: ${group.yourContribution.paid} / ${group.yourContribution.total}
-                          </p>
-                          <Progress value={(group.yourContribution.paid / group.yourContribution.total) * 100} />
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
+                  </div>
+                  <Badge variant={group.role === 'admin' ? 'secondary' : 'outline'} className="uppercase text-[10px] font-bold tracking-wide">
+                    {group.role}
+                  </Badge>
                 </div>
-              </Link>
-              <CardFooter className="bg-muted/50 py-2 px-6 text-sm text-muted-foreground justify-between">
-                <span>{typeof group.members === 'number' ? group.members : group.memberCount || 0} members</span>
-                <span className="hidden sm:block">Tap to view details &rarr;</span>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
 
-      <Button asChild className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 rounded-full w-14 h-14 shadow-lg" style={{ backgroundColor: "hsl(var(--accent))" }}>
-         <Link href="/groups/create">
-            <Plus className="h-6 w-6" />
-            <span className="sr-only">Create Group</span>
-        </Link>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div>
+                    <span className="text-xs text-muted-foreground font-medium uppercase">Pool Balance</span>
+                    <p className="text-number text-lg font-bold text-primary">${group.balance.toLocaleString()}</p>
+                  </div>
+                  <div className="text-right">
+                     <span className="text-xs text-muted-foreground font-medium uppercase">Next Due</span>
+                     <p className="text-number text-sm font-semibold">{group.nextDue}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">Your contribution</span>
+                    <span className={group.contribution.paid < group.contribution.total ? "text-warning font-medium" : "text-success font-medium"}>
+                      ${group.contribution.paid} / ${group.contribution.total}
+                    </span>
+                  </div>
+                  <Progress 
+                    value={(group.contribution.paid / group.contribution.total) * 100} 
+                    className="h-2" 
+                    // color handled by CSS variables, but we can conditionally style the indicator if needed
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center py-12 text-center space-y-4 opacity-80">
+            <div className="h-24 w-24 rounded-full bg-secondary flex items-center justify-center">
+              <Users className="h-10 w-10 text-muted-foreground/50" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-semibold text-lg">No groups found</h3>
+              <p className="text-sm text-muted-foreground max-w-xs mx-auto">
+                You haven't joined any groups matching this filter.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Floating Action Button */}
+      <Button
+        className="fixed bottom-20 right-6 h-14 w-14 rounded-full shadow-premium-lg p-0 bg-secondary text-secondary-foreground hover:bg-secondary/90 z-50 border-2 border-primary/10"
+        onClick={() => router.push('/groups/create')}
+      >
+        <Plus className="h-6 w-6 text-primary" />
       </Button>
     </div>
   );

@@ -1,166 +1,148 @@
 "use client";
 
-import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { PiggyBank, TrendingUp, Shield, Sparkles } from "lucide-react";
-
-const onboardingSlides = [
-  {
-    id: "slide1",
-    title: "Save Together",
-    description: "Pool funds with your community for collective financial power.",
-    imageId: "onboarding-save",
-    icon: PiggyBank,
-    gradient: "from-primary/20 via-primary/10 to-transparent",
-  },
-  {
-    id: "slide2",
-    title: "Invest Locally",
-    description: "Fund and support local businesses, growing your community's economy.",
-    imageId: "onboarding-invest",
-    icon: TrendingUp,
-    gradient: "from-accent/20 via-accent/10 to-transparent",
-  },
-  {
-    id: "slide3",
-    title: "Earn & Protect",
-    description: "Generate returns from investments and get access to community-backed insurance.",
-    imageId: "onboarding-earn",
-    icon: Shield,
-    gradient: "from-success/20 via-success/10 to-transparent",
-  },
-];
 
 export default function WelcomePage() {
-  const [api, setApi] = React.useState<any>();
-  const [current, setCurrent] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
-
-  const getImage = (id: string) => {
-    return PlaceHolderImages.find((img) => img.id === id);
-  }
-
   return (
-    <div className="flex flex-col items-center justify-start w-full py-8 px-4 pb-16">
-      {/* Hero Section */}
-      <div className="text-center mb-8 space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm mb-4">
-          <Sparkles className="w-8 h-8 text-white" />
+    <div className="relative text-gray-950 font-sans selection:bg-brand-blue/20 bg-white">
+      {/* Section 1: Hero */}
+      <section
+        className="relative min-h-screen w-full flex items-center justify-center px-6 sm:px-12 bg-cover bg-center"
+        style={{ backgroundImage: "url('/backWelcome.jpg')" }}
+      >
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+          <div className="space-y-6">
+            <h1 className="text-6xl sm:text-8xl font-black tracking-tighter text-gray-950 leading-[1.1] whitespace-nowrap">
+              Invest in your community.
+            </h1>
+            <h1 className="text-6xl sm:text-8xl font-black tracking-tighter text-brand-blue leading-[1.1] whitespace-nowrap">
+              Secure your future.
+            </h1>
+            <p className="text-xl sm:text-2xl font-semibold text-white leading-relaxed">
+              HiveFund is the trusted digital platform for traditional savings groups. We empower communities to pool resources, fund local businesses, and build a prosperous future together.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
+            <Button
+              asChild
+              className="h-16 px-12 text-lg font-bold bg-brand-blue hover:bg-brand-blue/90 text-white rounded-full shadow-xl transition-all transform hover:scale-110 active:scale-95"
+            >
+              <Link href="/register">
+                Create a Group
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="h-16 px-12 text-lg font-bold bg-gray-700 hover:bg-gray-800 text-white rounded-full shadow-xl transition-all transform hover:scale-110 active:scale-95"
+            >
+              <Link href="/login">
+                Sign In
+              </Link>
+            </Button>
+          </div>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-headline font-bold text-white tracking-tight">
-          Welcome to HiveFund
-        </h1>
-        <p className="text-lg text-white/90 max-w-md mx-auto">
-          Empowering communities through collective finance
-        </p>
-      </div>
+      </section>
 
-      {/* Carousel Section */}
-      <div className="w-full max-w-2xl mb-8 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150">
-        <Carousel setApi={setApi} className="w-full">
-          <CarouselContent>
-            {onboardingSlides.map((slide, index) => {
-              const imageData = getImage(slide.imageId);
-              const Icon = slide.icon;
-              return (
-                <CarouselItem key={slide.id}>
-                  <div className="space-y-6">
-                    <Card className="border-2 border-border/50 shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
-                      <CardContent className="flex flex-col items-center justify-center p-0 aspect-video relative">
-                        {/* Gradient Overlay */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} z-10 pointer-events-none`} />
-                        
-                        {/* Icon Badge */}
-                        <div className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-md group-hover:scale-110 transition-transform duration-300">
-                          <Icon className="w-6 h-6 text-primary" />
-                        </div>
-
-                        {imageData && (
-                          <Image
-                            src={imageData.imageUrl}
-                            alt={slide.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            data-ai-hint={imageData.imageHint}
-                          />
-                        )}
-                      </CardContent>
-                    </Card>
-                    
-                    <div className="text-center space-y-2 px-4">
-                      <h2 className="text-3xl font-bold font-headline text-white">
-                        {slide.title}
-                      </h2>
-                      <p className="text-white/80 text-base leading-relaxed max-w-md mx-auto">
-                        {slide.description}
-                      </p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex -left-12 border-2 shadow-md hover:bg-accent/50" />
-          <CarouselNext className="hidden sm:flex -right-12 border-2 shadow-md hover:bg-accent/50" />
-        </Carousel>
-
-        {/* Enhanced Indicators */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          {onboardingSlides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => api?.scrollTo(i)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                current === i + 1 
-                  ? "bg-white w-8 shadow-md shadow-white/30" 
-                  : "bg-white/30 w-2.5 hover:bg-white/50"
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
+      {/* Section 2: Savings Pools */}
+      <section className="min-h-screen w-full flex items-center justify-center px-6 sm:px-12 py-20 bg-white">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-950 leading-tight">
+            Savings Pools
+          </h2>
+          <p className="text-2xl font-semibold text-gray-700 leading-relaxed">
+            Keep your group's finances organized and transparent with automated contribution tracking and management.
+          </p>
+          <div className="space-y-6 text-lg text-gray-600 font-medium leading-relaxed">
+            <p>
+              Traditional savings groups have always relied on trust and manual record-keeping. HiveFund brings these time-honored practices into the digital age, automating the administrative burden while maintaining the personal trust that makes savings groups work.
+            </p>
+            <p>
+              Every contribution is recorded instantly, every member can see the group's balance in real-time, and all transactions are permanently documented in a secure digital ledger. No more disputes over who paid what, or how much the group has saved.
+            </p>
+            <p>
+              With HiveFund's savings pools, your group can focus on what matters most: building wealth together and supporting each other's financial goals.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Section 3: Community Investments */}
+      <section className="min-h-screen w-full flex items-center justify-center px-6 sm:px-12 py-20 bg-gray-900">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <h2 className="text-5xl sm:text-7xl font-black text-white leading-tight">
+            Community Investments
+          </h2>
+          <p className="text-2xl font-semibold text-gray-200 leading-relaxed">
+            Turn your group's savings into growth opportunities that benefit everyone in your community.
+          </p>
+          <div className="space-y-6 text-lg text-gray-300 font-medium leading-relaxed">
+            <p>
+              A savings group with capital is powerful. But that power is only truly realized when the money is put to work. Community investments allow your group to fund local entrepreneurs, support small businesses, and generate returns that benefit all members.
+            </p>
+            <p>
+              We help identify verified investment opportunities aligned with your group's goals and risk tolerance. Every investment is backed by clear terms, regular updates, and transparent tracking so your group knows exactly how the capital is being used and what returns to expect.
+            </p>
+            <p>
+              From funding a local shop to supporting agricultural ventures, your group's capital becomes a catalyst for community development. And as these ventures succeed, your group's wealth grows right along with them.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4: Secure by Design */}
+      <section className="min-h-screen w-full flex items-center justify-center px-6 sm:px-12 py-20 bg-white">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-950 leading-tight">
+            Secure by Design
+          </h2>
+          <p className="text-2xl font-semibold text-gray-700 leading-relaxed">
+            Your group's financial data is protected with enterprise-grade security and privacy standards.
+          </p>
+          <div className="space-y-6 text-lg text-gray-600 font-medium leading-relaxed">
+            <p>
+              Financial security isn't an afterthought—it's built into every layer of HiveFund. We employ the same security standards used by banks and financial institutions to ensure that your group's data, transactions, and member information are always protected.
+            </p>
+            <p>
+              All communications are encrypted end-to-end. Member data is securely stored with multiple backups. Account access is protected with multi-factor authentication. And our infrastructure is monitored 24/7 to detect and prevent any suspicious activity.
+            </p>
+            <p>
+              Beyond security, we're committed to your privacy. We never sell your data, never share member information without consent, and comply with the strictest data protection regulations. Your group's financial information belongs to you alone.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
-      <div className="w-full max-w-md space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-        <Button 
-          asChild 
-          size="lg" 
-          className="w-full h-12 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 bg-accent hover:bg-accent/90 text-white"
-        >
-          <Link href="/register">Get Started</Link>
-        </Button>
-        <Button 
-          asChild 
-          variant="outline" 
-          size="lg" 
-          className="w-full h-12 text-base font-medium border-2 border-white/30 bg-white/10 hover:bg-white/20 text-white hover:text-white transition-all duration-300"
-        >
-          <Link href="/login">Already have an account? Login</Link>
-        </Button>
-      </div>
+      <section className="w-full flex items-center justify-center px-6 sm:px-12 py-20 bg-gradient-to-r from-gray-900 to-gray-800">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <h2 className="text-5xl sm:text-6xl font-black text-white leading-tight">
+            Ready to grow your group?
+          </h2>
+          <p className="text-xl font-semibold text-gray-300 leading-relaxed">
+            Join thousands of savings groups using HiveFund to manage their finances and build wealth together.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
+            <Button
+              asChild
+              className="h-16 px-12 text-lg font-bold bg-brand-blue hover:bg-brand-blue/90 text-white rounded-full shadow-xl transition-all transform hover:scale-110 active:scale-95"
+            >
+              <Link href="/register">
+                Create a Group
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="h-16 px-12 text-lg font-bold bg-gray-700 hover:bg-gray-800 text-white rounded-full shadow-xl transition-all transform hover:scale-110 active:scale-95"
+            >
+              <Link href="/login">
+                Sign In
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

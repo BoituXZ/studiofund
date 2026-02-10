@@ -1,54 +1,103 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockDiscounts } from "@/lib/mock-data";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tag, Clock, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
 
 export default function DiscountsPage() {
-    return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold font-headline">Available Discounts</h1>
-                <p className="text-muted-foreground">Save at businesses you&apos;ve invested in</p>
-            </div>
-            <Tabs defaultValue="available">
-                <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="available">Available</TabsTrigger>
-                    <TabsTrigger value="used">Used</TabsTrigger>
-                    <TabsTrigger value="expired">Expired</TabsTrigger>
-                </TabsList>
-                <TabsContent value="available" className="mt-6">
-                     <div className="space-y-4">
-                        {mockDiscounts.map(discount => (
-                            <Card key={discount.id}>
-                                <CardContent className="p-4 flex items-center gap-4">
-                                    <Avatar className="h-16 w-16">
-                                        <AvatarImage src={discount.businessLogoUrl} alt={discount.businessName} />
-                                        <AvatarFallback>{discount.businessName.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1 space-y-1">
-                                        <p className="font-semibold">{discount.businessName}</p>
-                                        <p className="text-2xl font-bold text-accent font-headline">{discount.discount}</p>
-                                        <p className="text-sm text-muted-foreground">{discount.description}</p>
-                                        <p className="text-xs text-muted-foreground">Valid until: {discount.validUntil}</p>
-                                    </div>
-                                    <Button>View Details</Button>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </TabsContent>
-                <TabsContent value="used">
-                    <div className="text-center py-16 text-muted-foreground">
-                        <p>You haven&apos;t used any discounts yet.</p>
-                    </div>
-                </TabsContent>
-                <TabsContent value="expired">
-                    <div className="text-center py-16 text-muted-foreground">
-                        <p>No expired discounts.</p>
-                    </div>
-                </TabsContent>
-            </Tabs>
-        </div>
-    );
+  const [tab, setTab] = useState<"available" | "used" | "expired">("available");
+
+  // Mock Data
+  const discounts = [
+    {
+      id: 1,
+      business: "Chivhu Hardware",
+      offer: "15% OFF",
+      desc: "On all building materials",
+      validUntil: "12 Dec 2025",
+      status: "available"
+    },
+    {
+      id: 2,
+      business: "OK Mart",
+      offer: "$5 Coupon",
+      desc: "Minimum spend $50",
+      validUntil: "30 Nov 2025",
+      status: "available"
+    },
+    {
+      id: 3,
+      business: "Total Energies",
+      offer: "5% OFF",
+      desc: "Fuel purchase over 20L",
+      validUntil: "15 Oct 2025",
+      status: "expired"
+    }
+  ];
+
+  const filteredDiscounts = discounts.filter(d => d.status === tab || (tab === 'expired' && d.status === 'expired')); 
+  // Simplistic filter for mock data
+
+  return (
+    <div className="space-y-6 pb-20 min-h-screen bg-background">
+      {/* Header */}
+      <div className="space-y-1">
+        <h1 className="text-heading-2 text-primary">Available Discounts</h1>
+        <p className="text-body text-muted-foreground">Save at businesses you've invested in.</p>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex p-1 bg-secondary rounded-xl">
+        {["available", "used", "expired"].map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t as any)}
+            className={`flex-1 py-2 text-sm font-medium rounded-lg capitalize transition-all ${
+              tab === t 
+                ? "bg-white text-primary shadow-sm" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {/* List */}
+      <div className="space-y-4">
+        {filteredDiscounts.length > 0 ? (
+          filteredDiscounts.map((item) => (
+            <Card key={item.id} className="shadow-sm border-border/60 relative overflow-hidden group">
+              {/* Decorative side bar */}
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-primary" />
+              
+              <CardContent className="p-5 pl-6 flex justify-between items-center">
+                <div className="space-y-1">
+                  <h3 className="font-bold text-lg">{item.business}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <div className="flex items-center gap-2 pt-1">
+                    <Clock className="h-3 w-3 text-muted-foreground" />
+                    <span className="text-xs text-muted-foreground">Valid until {item.validUntil}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-2">
+                  <span className="text-xl font-bold text-primary">{item.offer}</span>
+                  <Button size="sm" className="h-8 px-4 text-xs bg-secondary text-primary hover:bg-secondary/80 shadow-none border border-primary/10">
+                    View
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <div className="text-center py-12 opacity-60">
+            <Tag className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
+            <p>No discounts in this category</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

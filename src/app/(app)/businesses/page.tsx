@@ -1,109 +1,143 @@
-import { Badge } from "@/components/ui/badge";
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { mockBusinesses } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
-import { ChevronDown, Filter, Search } from "lucide-react";
-import Image from "next/image";
-
-const filters = ["All", "Hardware", "Retail", "Agro Dealer", "Pharmacy", "Salon"];
-
-function RiskScoreBar({ score }: { score: number }) {
-  const color =
-    score >= 7
-      ? "bg-green-500"
-      : score >= 5
-      ? "bg-yellow-500"
-      : "bg-red-500";
-
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-medium">Risk Score</span>
-        <span className="text-sm font-bold">{score.toFixed(1)}/10</span>
-      </div>
-      <div className="w-full bg-muted rounded-full h-2">
-        <div
-          className={cn("h-2 rounded-full", color)}
-          style={{ width: `${score * 10}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
+import { Badge } from "@/components/ui/badge";
+import { Search, Filter, MapPin, TrendingUp, Info } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function BusinessesPage() {
-    return (
-        <div className="space-y-6">
-            <div className="space-y-4">
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search businesses..." className="pl-10" />
-                </div>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2 -mb-2">
-                        {filters.map((filter, index) => (
-                            <Button key={filter} variant={index === 0 ? "secondary" : "outline"} className={`whitespace-nowrap ${index === 0 ? 'bg-primary text-primary-foreground' : ''}`}>
-                                {filter}
-                            </Button>
-                        ))}
-                    </div>
-                     <Button variant="ghost" className="hidden sm:inline-flex">
-                        <Filter className="h-4 w-4 mr-2" />
-                        Filters
-                    </Button>
-                </div>
-                <div>
-                     <Button variant="outline" className="w-full sm:w-auto justify-between">
-                        Sort by: Risk Score (High to Low)
-                        <ChevronDown className="h-4 w-4 ml-2" />
-                    </Button>
-                </div>
+  const router = useRouter();
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filters = ["All", "Hardware", "Retail", "Agro", "Service"];
+
+  // Mock Data
+  const businesses = [
+    {
+      id: 1,
+      name: "Chivhu Hardware",
+      sector: "Hardware",
+      location: "Chivhu",
+      riskScore: 8.5,
+      capital: 1500,
+      interest: 12,
+      period: 45,
+      image: "building" // Placeholder logic would go here
+    },
+    {
+      id: 2,
+      name: "Mbare Fresh Market",
+      sector: "Retail",
+      location: "Harare",
+      riskScore: 7.2,
+      capital: 500,
+      interest: 15,
+      period: 30,
+      image: "vegetables"
+    },
+    {
+      id: 3,
+      name: "Mazowe Agro Supplies",
+      sector: "Agro",
+      location: "Mazowe",
+      riskScore: 9.0,
+      capital: 3000,
+      interest: 10,
+      period: 60,
+      image: "tractor"
+    }
+  ];
+
+  return (
+    <div className="space-y-6 pb-20 min-h-screen bg-background">
+      {/* Search & Filters */}
+      <div className="space-y-4 sticky top-0 bg-background z-10 pt-2 pb-2">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Input 
+            placeholder="Search businesses..." 
+            className="pl-9 bg-secondary/50 border-border/60"
+          />
+        </div>
+        
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {filters.map(f => (
+            <Button 
+              key={f}
+              variant={activeFilter === f ? "default" : "outline"} 
+              size="sm" 
+              className="rounded-full px-4 h-8 text-xs flex-shrink-0"
+              onClick={() => setActiveFilter(f)}
+            >
+              {f}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Business List */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {businesses.map((biz) => (
+          <Card 
+            key={biz.id} 
+            className="overflow-hidden shadow-premium hover:shadow-premium-hover transition-premium border-border/60 cursor-pointer group"
+            onClick={() => router.push(`/businesses/${biz.id}`)} // Assuming this route exists or will handle it
+          >
+            {/* Placeholder Image Area */}
+            <div className="h-32 bg-secondary w-full flex items-center justify-center relative">
+              <TrendingUp className="h-10 w-10 text-muted-foreground/20" />
+              <Badge className={`absolute top-3 right-3 ${biz.riskScore >= 8 ? 'bg-success' : biz.riskScore >= 6 ? 'bg-warning' : 'bg-destructive'}`}>
+                Score: {biz.riskScore}/10
+              </Badge>
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {mockBusinesses.map(business => (
-                    <Card key={business.id}>
-                        <CardHeader className="p-0">
-                             <div className="relative aspect-video">
-                                <Image
-                                src={business.imageUrl}
-                                alt={business.name}
-                                fill
-                                className="object-cover rounded-t-lg"
-                                data-ai-hint={business.imageHint}
-                                />
-                             </div>
-                        </CardHeader>
-                        <CardContent className="p-4 space-y-4">
-                            <div className="space-y-1">
-                                <CardTitle className="font-headline">{business.name}</CardTitle>
-                                <div className="flex items-center gap-2">
-                                    <Badge variant="secondary">{business.sector}</Badge>
-                                    <span className="text-sm text-muted-foreground">{business.location}</span>
-                                </div>
-                            </div>
-                            
-                            <RiskScoreBar score={business.riskScore} />
-                            
-                            <div className="grid grid-cols-2 gap-4 text-sm pt-2">
-                                <div>
-                                    <p className="text-muted-foreground">Capital Needed</p>
-                                    <p className="font-medium">${business.capitalNeeded.toLocaleString()}</p>
-                                </div>
-                                 <div>
-                                    <p className="text-muted-foreground">Interest Rate</p>
-                                    <p className="font-medium">{business.interestRate}%</p>
-                                </div>
-                            </div>
-                            
-                            <Button className="w-full">View Details</Button>
-                        </CardContent>
-                    </Card>
-                ))}
-            </div>
-        </div>
-    );
+            <CardContent className="p-4 space-y-4">
+              <div className="space-y-1">
+                <div className="flex justify-between items-start">
+                  <h3 className="font-bold text-lg leading-tight">{biz.name}</h3>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <Badge variant="secondary" className="text-[10px] h-5 px-1.5 rounded-md">{biz.sector}</Badge>
+                  <div className="flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    <span>{biz.location}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-border/50">
+                <div>
+                  <span className="text-[10px] text-muted-foreground uppercase font-bold">Capital</span>
+                  <p className="text-number font-semibold text-foreground">${biz.capital}</p>
+                </div>
+                <div>
+                  <span className="text-[10px] text-muted-foreground uppercase font-bold">Interest</span>
+                  <p className="text-number font-semibold text-success">{biz.interest}%</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-muted-foreground uppercase font-bold">Term</span>
+                  <p className="text-number font-semibold text-foreground">{biz.period}d</p>
+                </div>
+              </div>
+              
+              <Button className="w-full bg-secondary text-primary hover:bg-secondary/80 h-9 text-sm font-medium mt-1">
+                View Details
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+       {/* Floating Filter Button */}
+       <Button
+        className="fixed bottom-20 right-6 h-12 w-12 rounded-full shadow-premium p-0 bg-white text-foreground hover:bg-gray-50 z-50 border border-border"
+        // onClick={() => openFilterModal()}
+      >
+        <Filter className="h-5 w-5" />
+      </Button>
+    </div>
+  );
 }
